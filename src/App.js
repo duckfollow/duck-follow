@@ -1,7 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import duck from './assets/img/duck.svg'
+import profile from './assets/img/profile.jpg'
 import './App.css';
+import { Button } from 'reactstrap';
 
 function App() {
   return (
@@ -20,6 +22,12 @@ function App() {
           Learn React
         </a>
       </header>
+      <div className="App-content">
+        <img src={profile} className="img-circle img-profile" alt="logo" />
+        <p>
+          Prasit Suphancho
+        </p>
+      </div>
     </div>
   );
 }

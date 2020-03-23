@@ -24,6 +24,17 @@
   color: white;
 }
 
+.App-content {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +46,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+
+.img-profile {
+  width: 200px;
+  height: 200px;
 }
