@@ -56,3 +56,14 @@
   width: 200px;
   height: 200px;
 }
+
+.social-width {
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+}
+
+.social-width:hover {
+  background-color: #d2d3d69c;
+  border-radius: 5px;
+}
