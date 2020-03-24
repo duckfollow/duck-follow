@@ -9,7 +9,7 @@ export default class Policy extends React.Component {
                 <div className="App-content">
                     <h1>Policy <Badge color="secondary">privacy</Badge></h1>
                 </div>
-             </div>
+            </div>
         );
       }
 }

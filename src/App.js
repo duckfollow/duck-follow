@@ -18,7 +18,7 @@ function App() {
     <Router>
       <Route path="/" exact component={Main}/>
       <Route path="/duck-follow" exact component={Main}/>
-      <Route path="/policy-privacy" exact component={Policy}/>
+      <Route path="/duck-follow/policy-privacy" exact component={Policy}/>
     </Router>
   );
 }
