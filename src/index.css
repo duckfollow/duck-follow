@@ -25,10 +25,19 @@ code {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: rgba(136, 136, 136, 0.527); 
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(85, 85, 85, 0.644); 
+}
+
+html { /* body won't work ¯\_(ツ)_/¯ */
+  scroll-snap-type: y mandatory;
+}
+
+section {
+  height: 100vh;
+  scroll-snap-align: start;
 }
