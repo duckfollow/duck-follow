@@ -1,30 +1,30 @@
 {
   "files": {
-    "main.css": "/duck-follow/static/css/main.25ae87af.chunk.css",
-    "main.js": "/duck-follow/static/js/main.327ede8d.chunk.js",
-    "main.js.map": "/duck-follow/static/js/main.327ede8d.chunk.js.map",
+    "main.css": "/duck-follow/static/css/main.c286e12c.chunk.css",
+    "main.js": "/duck-follow/static/js/main.499316aa.chunk.js",
+    "main.js.map": "/duck-follow/static/js/main.499316aa.chunk.js.map",
     "runtime-main.js": "/duck-follow/static/js/runtime-main.10a00341.js",
     "runtime-main.js.map": "/duck-follow/static/js/runtime-main.10a00341.js.map",
     "static/css/2.de424728.chunk.css": "/duck-follow/static/css/2.de424728.chunk.css",
-    "static/js/2.1dd0d6fe.chunk.js": "/duck-follow/static/js/2.1dd0d6fe.chunk.js",
-    "static/js/2.1dd0d6fe.chunk.js.map": "/duck-follow/static/js/2.1dd0d6fe.chunk.js.map",
+    "static/js/2.5ad55a2a.chunk.js": "/duck-follow/static/js/2.5ad55a2a.chunk.js",
+    "static/js/2.5ad55a2a.chunk.js.map": "/duck-follow/static/js/2.5ad55a2a.chunk.js.map",
     "index.html": "/duck-follow/index.html",
-    "precache-manifest.78f2d7cecf810bb2531ab03de8dbe557.js": "/duck-follow/precache-manifest.78f2d7cecf810bb2531ab03de8dbe557.js",
+    "precache-manifest.efb289a929de355bdca367cabc14da00.js": "/duck-follow/precache-manifest.efb289a929de355bdca367cabc14da00.js",
     "service-worker.js": "/duck-follow/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/duck-follow/static/css/2.de424728.chunk.css.map",
-    "static/css/main.25ae87af.chunk.css.map": "/duck-follow/static/css/main.25ae87af.chunk.css.map",
-    "static/js/2.1dd0d6fe.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.1dd0d6fe.chunk.js.LICENSE.txt",
+    "static/css/main.c286e12c.chunk.css.map": "/duck-follow/static/css/main.c286e12c.chunk.css.map",
+    "static/js/2.5ad55a2a.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.5ad55a2a.chunk.js.LICENSE.txt",
     "static/media/duck.svg": "/duck-follow/static/media/duck.7cb5d820.svg",
     "static/media/facebook.svg": "/duck-follow/static/media/facebook.06468580.svg",
     "static/media/instagram.svg": "/duck-follow/static/media/instagram.62593ffa.svg",
-    "static/media/logo.svg": "/duck-follow/static/media/logo.ee7cd8ed.svg",
-    "static/media/profile.jpg": "/duck-follow/static/media/profile.b9ec4ef9.jpg"
+    "static/media/profile.jpg": "/duck-follow/static/media/profile.b9ec4ef9.jpg",
+    "static/media/twitter.svg": "/duck-follow/static/media/twitter.f58833da.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.10a00341.js",
     "static/css/2.de424728.chunk.css",
-    "static/js/2.1dd0d6fe.chunk.js",
-    "static/css/main.25ae87af.chunk.css",
-    "static/js/main.327ede8d.chunk.js"
+    "static/js/2.5ad55a2a.chunk.js",
+    "static/css/main.c286e12c.chunk.css",
+    "static/js/main.499316aa.chunk.js"
   ]
 }
