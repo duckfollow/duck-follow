@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "820fa24270c8c062a28726f1ed38cdf3",
+    "revision": "e6b932a6b94a4ec584c69562c4083fce",
     "url": "/duck-follow/index.html"
   },
   {
-    "revision": "09edabd130e9906578d6",
+    "revision": "9ecd831d52dcf63ffe28",
     "url": "/duck-follow/static/css/2.de424728.chunk.css"
   },
   {
-    "revision": "07e8913d67e4c4e26d6a",
+    "revision": "392292b950708e6ad78a",
     "url": "/duck-follow/static/css/main.c286e12c.chunk.css"
   },
   {
-    "revision": "09edabd130e9906578d6",
-    "url": "/duck-follow/static/js/2.5ad55a2a.chunk.js"
+    "revision": "9ecd831d52dcf63ffe28",
+    "url": "/duck-follow/static/js/2.e115e0bf.chunk.js"
   },
   {
-    "revision": "5ac48c47bb3912b14c2d8de4f56d5ae8",
-    "url": "/duck-follow/static/js/2.5ad55a2a.chunk.js.LICENSE.txt"
+    "revision": "3453b8997016469371284a28c0e873e2",
+    "url": "/duck-follow/static/js/2.e115e0bf.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "07e8913d67e4c4e26d6a",
-    "url": "/duck-follow/static/js/main.499316aa.chunk.js"
+    "revision": "392292b950708e6ad78a",
+    "url": "/duck-follow/static/js/main.67cb920e.chunk.js"
   },
   {
     "revision": "8d5dffd45c4c32a49c32",
