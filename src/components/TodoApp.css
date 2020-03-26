@@ -1,0 +1,6 @@
+.align-left ul {
+    list-style-type:none
+}
+.align-left ul li{
+    text-align: left;
+}
