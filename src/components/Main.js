@@ -133,7 +133,20 @@ export default class Main extends React.Component {
             </section>
             <section>
               <div className="App-content">
-                
+                <div>
+                  <a href="https://play.google.com/store/apps/details?id=com.prasit.theboxshop" target="_blank">
+                    <img src="https://lh3.googleusercontent.com/WZeG1MyE8bpBt1cHMBAuoRUghGOWE23P7Ji28yMyUWF-90kTy6GPgDOm0rqvvgYOx-E=s180-rw"/>
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=com.prasit.shopmanager" target="_blank">
+                    <img src="https://lh3.googleusercontent.com/kuN3ko72k14yuetGz21EFJrekBQC5Gat_3WWVhFaWasm8aLHDh6KdYIUsji_9thZu2wb=s180-rw"/>
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=me.duckfollow.ozone" target="_blank">
+                    <img src="https://lh3.googleusercontent.com/4D1CU1oKP1RRC4NX45ZGbYGd9AuqpiYpTMDxuUi1iLwN8KG4PGEt3jjmJ8zyUWeLVLo=s180-rw"/>
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=me.duckfollow.qrcode" target="_blank">
+                    <img src="https://lh3.googleusercontent.com/woEQJUcdb0M8O96zNuGnEhhn2uJBS4h1GkmTaJSxePzjFm6nhHeLToPuFF8_AU9sras=s180-rw"/>
+                  </a>
+                </div>
               </div>
             </section>
             <section>

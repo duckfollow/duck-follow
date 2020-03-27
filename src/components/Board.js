@@ -1,6 +1,6 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Container, Row, Col } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Fade } from 'reactstrap';
 import './Board.css';
 import * as firebase from 'firebase';
 
@@ -70,7 +70,14 @@ export default class Broard extends React.Component {
             selected: []/*,
             complete: getItems(7, 10)*/
         };
-        console.log(this.state.items)
+        this.handleRemove = this.handleRemove.bind(this);
+      }
+
+      handleRemove(event) {
+        console.log(event.target.value)
+        const dataRef = firebase.database()
+        const key_value = event.target.value
+        dataRef.ref("todo").child(key_value).remove();
       }
 
       componentDidMount(){
@@ -182,10 +189,8 @@ export default class Broard extends React.Component {
     render() {
         return (
         <div className="Board-content">
-            <br/>
-            <br/>
            <DragDropContext onDragEnd={this.onDragEnd}>
-                    <div className="after-box">
+                    {/* <div className="after-box"> */}
                         <div className="box">
                         <h1>TODO</h1>
                         <Droppable droppableId="droppable">
@@ -208,7 +213,9 @@ export default class Broard extends React.Component {
                                                         provided.draggableProps.style
                                                     )}>
                                                     {item.text}
+                                                    <Button className="btn-float-right" value={item.id} onClick={this.handleRemove} outline color="danger" size="sm">ลบ</Button>
                                                 </div>
+
                                             )}
                                         </Draggable>
                                     ))}
@@ -248,7 +255,7 @@ export default class Broard extends React.Component {
                             )}
                         </Droppable>
                         </div>
-                        </div>
+                        {/* </div> */}
        </DragDropContext>
        </div>
         );
