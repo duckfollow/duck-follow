@@ -4,7 +4,6 @@ import Main from './components/Main'
 import Policy from './components/Policy'
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
 function App() {
   return (
     <HashRouter basename="/">

@@ -33,7 +33,7 @@ export default class Timeline extends React.Component {
         <Swiper {...params} activeSlideKey='4'>
             <div key='0' className="swiper-slide">
                 <div className="timestamp">
-                    <span className="date">29 April 1996</span>
+                    <span className="date">29 Apr 1996</span>
                 </div>
                 <div className="status">
                     <span>Birth's Day</span>
@@ -41,7 +41,7 @@ export default class Timeline extends React.Component {
             </div>
             <div key='1' className="swiper-slide">
                 <div className="timestamp">
-                    <span className="date">17 August 2013</span>
+                    <span className="date">17 Aug 2013</span>
                 </div>
                 <div className="status">
                     <span>Birth's my son/Start University's Kasetsart</span>
@@ -65,7 +65,7 @@ export default class Timeline extends React.Component {
             </div>
             <div key='4' className="swiper-slide">
                 <div className="timestamp">
-                    <span className="date">1 January 2020</span>
+                    <span className="date">1 Jan 2020</span>
                 </div>
                 <div className="status">
                     <span>node.js Developer</span>
