@@ -6,7 +6,7 @@ import Swiper from 'react-id-swiper';
 export default class Timeline extends React.Component {
     render() {
         const params = {
-            slidesPerView: 4,
+            slidesPerView: 3,
             grabCursor: true,
             loop: false,
             direction: 'horizontal',
@@ -17,7 +17,7 @@ export default class Timeline extends React.Component {
               clickable: true
             },
             breakpoints: {
-                480: {
+                250: {
                     slidesPerView: 1,
                     // spaceBetween: 20
                 },
@@ -30,8 +30,8 @@ export default class Timeline extends React.Component {
           }
 
       return (
-        <Swiper {...params}>
-            <div className="swiper-slide">
+        <Swiper {...params} activeSlideKey='4'>
+            <div key='0' className="swiper-slide">
                 <div className="timestamp">
                     <span className="date">29 April 1996</span>
                 </div>
@@ -39,44 +39,36 @@ export default class Timeline extends React.Component {
                     <span>Birth's Day</span>
                 </div>
             </div>
-            <div className="swiper-slide">
+            <div key='1' className="swiper-slide">
                 <div className="timestamp">
-                    <span className="date">asas</span>
+                    <span className="date">17 August 2013</span>
                 </div>
                 <div className="status">
-                    <span>asas</span>
+                    <span>Birth's my son/Start University's Kasetsart</span>
                 </div>
             </div>
-            <div className="swiper-slide">
+            <div key='2' className="swiper-slide">
                 <div className="timestamp">
-                    <span className="date">edweew</span>
+                    <span className="date">14 May 2017 </span>
                 </div>
                 <div className="status">
-                    <span>wererer</span>
+                    <span>First JOB PHP Programmer</span>
                 </div>
             </div>
-            <div className="swiper-slide">
+            <div key='3' className="swiper-slide">
                 <div className="timestamp">
-                    <span className="date">edweew</span>
+                    <span className="date">1 May 2019</span>
                 </div>
                 <div className="status">
-                    <span>wererer</span>
+                    <span>Android/IOS Developer</span>
                 </div>
             </div>
-            <div className="swiper-slide">
+            <div key='4' className="swiper-slide">
                 <div className="timestamp">
-                    <span className="date">edweew</span>
+                    <span className="date">1 January 2020</span>
                 </div>
                 <div className="status">
-                    <span>wererer</span>
-                </div>
-            </div>
-            <div className="swiper-slide">
-                <div className="timestamp">
-                    <span className="date">edweew</span>
-                </div>
-                <div className="status">
-                    <span>wererer</span>
+                    <span>node.js Developer</span>
                 </div>
             </div>
         </Swiper>

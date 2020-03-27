@@ -17,14 +17,17 @@ export default class TodoApp extends React.Component {
       return (
         <div>
             <h1>TO DO</h1>
-            <Form inline>
-                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+            <div>
+              <Form inline>
+                  <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Input id="new-todo"
-                        onChange={this.handleChange}
-                        value={this.state.text} placeholder="What needs to be done?"/>
-                </FormGroup>
-                <Button onClick={this.handleSubmit}>Add</Button>
-            </Form>
+                          onChange={this.handleChange}
+                          value={this.state.text} placeholder="What needs to be done?"/>
+                    <Button className="btn-width" onClick={this.handleSubmit}>Add</Button>
+                  </FormGroup>
+                  
+              </Form>
+            </div>
             <TodoList/>
         </div>
       );

@@ -14,12 +14,15 @@ import logoboxshop from '../assets/img/theboxapp.png'
 import { Link } from 'react-router-dom';
 import Timeline from './Timeline'
 
+import Lottie from 'react-lottie';
+import animationData from '../assets/img/analytics.json'
+
 
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
-    this.state = { value: 0, previous: 0 };
+    this.state = { value: 0, previous: 0 ,isStopped: false, isPaused: false};
     this.handleScrollToElement = this.handleScrollToElement.bind(this);
   }
 
@@ -29,6 +32,14 @@ export default class Main extends React.Component {
     }
   }
     render() {
+      const defaultOptions = {
+          loop: true,
+          autoplay: true, 
+          animationData: animationData,
+          rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+          }
+      };
         return (
             <div className="App">
             <section>
@@ -95,7 +106,12 @@ export default class Main extends React.Component {
             </section>
             <section>
               <div className="App-content">
-                <Link to="/policy-privacy">policy-privacy</Link>
+              <Lottie options={defaultOptions}
+                height={300}
+                width={300}
+                isStopped={this.state.isStopped}
+                isPaused={this.state.isPaused}/>
+              <Link to="/policy-privacy">policy-privacy</Link>
               </div>
             </section>
           </div>

@@ -38,9 +38,10 @@ export default class Policy extends React.Component {
                         <h1>บริการบางอย่างของเรา</h1>
                         <p>ประกาศเกี่ยวกับนโยบายความเป็นส่วนตัวต่อไปนี้มีข้อมูลเพิ่มเติมเกี่ยวกับบริการบางอย่างของเรา</p>
                         <ul>
-                            <li>the box shop เปิดร้านค้าออนไลน์</li>
-                            <li>ozone not included ตรวจระดับฝุ่น PM 2.5</li>
-                            <li>krap krap จัดการร้านค้า</li>
+                            <li><a href="https://play.google.com/store/apps/details?id=com.prasit.theboxshop" target="_blank">the box shop เปิดร้านค้าออนไลน์</a></li>
+                            <li><a href="https://play.google.com/store/apps/details?id=me.duckfollow.ozone" target="_blank">ozone not included ตรวจระดับฝุ่น PM 2.5</a></li>
+                            <li><a href="https://play.google.com/store/apps/details?id=com.prasit.shopmanager" target="_blank">krap krap จัดการร้านค้า</a></li>
+                            <li><a href="https://play.google.com/store/apps/details?id=me.duckfollow.qrcode" target="_blank">แสกน QR Code</a></li>
                         </ul>
                     </div>
                 </section>

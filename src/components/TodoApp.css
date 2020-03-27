@@ -4,3 +4,17 @@
 .align-left ul li{
     text-align: left;
 }
+
+.btn-width {
+    margin-left: 5px;
+}
+
+@media screen and (min-width: 0px) and (max-width: 575px) {
+    .btn-width {
+        margin-top: 10px;
+        margin-left: 0 !important;
+        width: 100%;
+    }
+}
+
+
