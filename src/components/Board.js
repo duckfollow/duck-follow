@@ -2,6 +2,7 @@ import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Container, Row, Col } from 'reactstrap';
 import './Board.css';
+import * as firebase from 'firebase';
 
 // fake data generator
 const getItems = (count, offset = 0) =>
@@ -61,11 +62,48 @@ const getListStyle = isDraggingOver => ({
 });
 
 export default class Broard extends React.Component {
-    state = {
-        items: getItems(15),
-        selected: getItems()/*,
-        complete: getItems(7, 10)*/
-    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: [],
+            selected: []/*,
+            complete: getItems(7, 10)*/
+        };
+        console.log(this.state.items)
+      }
+
+      componentDidMount(){
+        const dataList = firebase.database().ref('todo');
+        dataList.on('value', (snapshot) => {
+          let dataTodo = [];
+          let dataCompete = []; 
+          snapshot.forEach(productSnapshot => {
+            let data = productSnapshot.val();
+            if (!data.status) {
+              dataTodo.push({
+                  id:productSnapshot.key,
+                  text:data.text,
+                  status:data.status,
+                  date:data.date
+              });
+            } else {
+                dataCompete.push({
+                    id:productSnapshot.key,
+                    text:data.text,
+                    status:data.status,
+                    date:data.date
+                });
+            }
+        });
+          this.setState({
+            items: dataTodo
+          });
+          this.setState({
+            selected: dataCompete
+          });
+        });
+      }
 
     /**
      * A semi-generic way to handle multiple lists. Matches
@@ -82,7 +120,11 @@ export default class Broard extends React.Component {
 
     onDragEnd = result => {
         const { source, destination } = result;
+        
 
+        let key_value = result.draggableId
+        console.log('result')
+        console.log(key_value)
         // dropped outside the list
         if (!destination) {
             return;
@@ -109,6 +151,26 @@ export default class Broard extends React.Component {
                 source,
                 destination
             );
+
+            if (source.droppableId === 'droppable') {
+                const dataRef = firebase.database()
+                dataRef.ref("todo/"+key_value).update({
+                    status: true
+                }).then(function () {
+                    console.log("success")
+                    }, function () {
+                    console.log('rejected promise')
+                }).catch((e) => console.log(e))
+            } else {
+                const dataRef = firebase.database()
+                dataRef.ref("todo/"+key_value).update({
+                    status: false
+                }).then(function () {
+                    console.log("success")
+                    }, function () {
+                    console.log('rejected promise')
+                }).catch((e) => console.log(e)) 
+            }
 
             this.setState({
                 items: result.droppable,
@@ -145,7 +207,7 @@ export default class Broard extends React.Component {
                                                         snapshot.isDragging,
                                                         provided.draggableProps.style
                                                     )}>
-                                                    {item.content}
+                                                    {item.text}
                                                 </div>
                                             )}
                                         </Draggable>
@@ -176,7 +238,7 @@ export default class Broard extends React.Component {
                                                         snapshot.isDragging,
                                                         provided.draggableProps.style
                                                     )}>
-                                                    {item.content}
+                                                    {item.text}
                                                 </div>
                                             )}
                                         </Draggable>
