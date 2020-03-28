@@ -21,12 +21,12 @@ export default class TodoApp extends React.Component {
               <Form inline>
                   <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Input id="new-todo"
-                          onChange={this.handleChange}
-                          value={this.state.text} placeholder="What needs to be done?"/>
+                      onChange={this.handleChange}
+                      value={this.state.text} placeholder="What needs to be done?"/>
                     <Button className="btn-width" onClick={this.handleSubmit}>Add</Button>
-                  </FormGroup>
-                  
+                  </FormGroup> 
               </Form>
+              <p className="txt-discription">*อยากให้ทำอะไรสร้างเพิ่มใน Task ได้เลยครับ</p>
             </div>
             {/* <TodoList/> */}
         </div>
@@ -44,11 +44,13 @@ export default class TodoApp extends React.Component {
       if (this.state.text.length === 0) {
         return;
       }
-
+      var d = new Date()
+      var date = d.toISOString()
+      console.log(date.slice(0,10))
       dataRef.ref("todo").push({
           text: this.state.text,
           status: false,
-          date: Date.now()
+          date: date.slice(0,10)
         }).then(function () {
           console.log("success")
           context.setState({text:''})

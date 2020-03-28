@@ -3,7 +3,14 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Button, Form, FormGroup, Label, Input, Fade } from 'reactstrap';
 import './Board.css';
 import * as firebase from 'firebase';
-
+import {
+    Card, CardImg, CardText, CardBody, CardLink,
+    CardTitle, CardSubtitle
+  } from 'reactstrap';
+import binicon from '../assets/img/bin.svg'
+import Lottie from 'react-lottie';
+import animationData from '../assets/img/success.json'
+import success from '../assets/img/success.svg'
 // fake data generator
 const getItems = (count, offset = 0) =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -42,15 +49,43 @@ const grid = 8;
 const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: 'none',
-    padding: grid * 2,
+    // padding: grid * 2,
     margin: `0 0 ${grid}px 0`,
     borderRadius: 5,
-
     // change background colour if dragging
     background: isDragging ? 'lightgreen' : 'grey',
 
     // styles we need to apply on draggables
     ...draggableStyle
+});
+
+const getItemCardStyle = (isDragging, draggableStyle) => ({
+
+    // change background colour if dragging
+    // backgroundColor: isDragging ? '#17a2b8' : '#fffff',
+    borderColor: isDragging ? '#28a745' : '#fffff',
+
+    // styles we need to apply on draggables
+    // ...draggableStyle
+});
+
+const getItemCard2Style = (isDragging, draggableStyle) => ({
+
+    // change background colour if dragging
+    // backgroundColor: isDragging ? '#17a2b8' : '#fffff',
+    borderColor: isDragging ? '#ffc107' : '#fffff',
+
+    // styles we need to apply on draggables
+    // ...draggableStyle
+});
+
+const getItemCardTextStyle = (isDragging, draggableStyle) => ({
+
+    // change background colour if dragging
+    color: isDragging ? '#000000' : '#000000',
+
+    // styles we need to apply on draggables
+    // ...draggableStyle
 });
 
 const getListStyle = isDraggingOver => ({
@@ -71,6 +106,7 @@ export default class Broard extends React.Component {
             complete: getItems(7, 10)*/
         };
         this.handleRemove = this.handleRemove.bind(this);
+        this.handleChange = this.handleChange.bind(this);
       }
 
       handleRemove(event) {
@@ -78,6 +114,21 @@ export default class Broard extends React.Component {
         const dataRef = firebase.database()
         const key_value = event.target.value
         dataRef.ref("todo").child(key_value).remove();
+      }
+
+      handleChange(event) {
+        const dataRef = firebase.database()
+        console.log(event.target.value)
+        const key_value = event.target.value
+        const isChecked = event.target.checked;
+  
+        dataRef.ref("todo/"+key_value).update({
+          status: isChecked
+        }).then(function () {
+          console.log("success")
+          }, function () {
+          console.log('rejected promise')
+        }).catch((e) => console.log(e))
       }
 
       componentDidMount(){
@@ -158,11 +209,13 @@ export default class Broard extends React.Component {
                 source,
                 destination
             );
-
+            var d = new Date()
+            var date = d.toISOString().slice(0,10)
             if (source.droppableId === 'droppable') {
                 const dataRef = firebase.database()
                 dataRef.ref("todo/"+key_value).update({
-                    status: true
+                    status: true,
+                    date: date
                 }).then(function () {
                     console.log("success")
                     }, function () {
@@ -171,7 +224,8 @@ export default class Broard extends React.Component {
             } else {
                 const dataRef = firebase.database()
                 dataRef.ref("todo/"+key_value).update({
-                    status: false
+                    status: false,
+                    date: date
                 }).then(function () {
                     console.log("success")
                     }, function () {
@@ -187,6 +241,14 @@ export default class Broard extends React.Component {
         }
     };
     render() {
+        const defaultOptions = {
+            loop: true,
+            autoplay: true, 
+            animationData: animationData,
+            rendererSettings: {
+              preserveAspectRatio: 'xMidYMid slice'
+            }
+        };
         return (
         <div className="Board-content">
            <DragDropContext onDragEnd={this.onDragEnd}>
@@ -212,8 +274,27 @@ export default class Broard extends React.Component {
                                                         snapshot.isDragging,
                                                         provided.draggableProps.style
                                                     )}>
-                                                    {item.text}
-                                                    <Button className="btn-float-right" value={item.id} onClick={this.handleRemove} outline color="danger" size="sm">ลบ</Button>
+                                                    <Card style={getItemCardStyle(
+                                                        snapshot.isDragging,
+                                                        provided.draggableProps.style
+                                                    )}>
+                                                        <div>
+                                                            <label className="container-checkbox">{item.date}
+                                                                <input type="checkbox" value={item.id} defaultChecked={false} onChange={this.handleChange}/>
+                                                                <span className="checkmark"></span>
+                                                                <button className="btn-float-right btn-custom" value={item.id} onClick={this.handleRemove}>
+                                                                    X
+                                                                </button>
+                                                            </label>
+                                                        </div>
+                                                       
+                                                        <CardBody className="card-body">
+                                                            <CardText style={getItemCardTextStyle(
+                                                                snapshot.isDragging,
+                                                                provided.draggableProps.style
+                                                            )}>{item.text}</CardText>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
 
                                             )}
@@ -225,7 +306,7 @@ export default class Broard extends React.Component {
                         </Droppable>
                         </div>
                         <div className="box">
-                        <h1>Complete</h1>
+                        <h1>DONE</h1>
                         <Droppable droppableId="droppable2">
                             {(provided, snapshot) => (
                                 <div
@@ -245,7 +326,30 @@ export default class Broard extends React.Component {
                                                         snapshot.isDragging,
                                                         provided.draggableProps.style
                                                     )}>
-                                                    {item.text}
+                                                    <Card
+                                                        style={getItemCard2Style(
+                                                            snapshot.isDragging,
+                                                            provided.draggableProps.style
+                                                        )}>
+                                                        <div>
+                                                            {/* <Lottie options={defaultOptions}
+                                                            height={50}
+                                                            width={50}
+                                                            isStopped={this.state.isStopped}
+                                                            isPaused={this.state.isPaused}/> */}
+                                                            <label className="container-checkbox">{item.date}
+                                                                <input type="checkbox" checked="checked" value={item.id} defaultChecked={true} onChange={this.handleChange}/>
+                                                                <span className="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <CardBody className="card-body">
+                                                            <CardText
+                                                            style={getItemCardTextStyle(
+                                                                snapshot.isDragging,
+                                                                provided.draggableProps.style
+                                                            )}>{item.text}</CardText>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             )}
                                         </Draggable>
