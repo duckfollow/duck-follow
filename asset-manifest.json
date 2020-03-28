@@ -1,19 +1,20 @@
 {
   "files": {
-    "main.css": "/duck-follow/static/css/main.f05d446f.chunk.css",
-    "main.js": "/duck-follow/static/js/main.b570a0b5.chunk.js",
-    "main.js.map": "/duck-follow/static/js/main.b570a0b5.chunk.js.map",
+    "main.css": "/duck-follow/static/css/main.6cdccf60.chunk.css",
+    "main.js": "/duck-follow/static/js/main.7a35e2a9.chunk.js",
+    "main.js.map": "/duck-follow/static/js/main.7a35e2a9.chunk.js.map",
     "runtime-main.js": "/duck-follow/static/js/runtime-main.10a00341.js",
     "runtime-main.js.map": "/duck-follow/static/js/runtime-main.10a00341.js.map",
     "static/css/2.c41f91ad.chunk.css": "/duck-follow/static/css/2.c41f91ad.chunk.css",
-    "static/js/2.02ffbc4d.chunk.js": "/duck-follow/static/js/2.02ffbc4d.chunk.js",
-    "static/js/2.02ffbc4d.chunk.js.map": "/duck-follow/static/js/2.02ffbc4d.chunk.js.map",
+    "static/js/2.26470417.chunk.js": "/duck-follow/static/js/2.26470417.chunk.js",
+    "static/js/2.26470417.chunk.js.map": "/duck-follow/static/js/2.26470417.chunk.js.map",
     "index.html": "/duck-follow/index.html",
-    "precache-manifest.b8221729088b6e6408eb1880a6f4d929.js": "/duck-follow/precache-manifest.b8221729088b6e6408eb1880a6f4d929.js",
+    "precache-manifest.8bb0afd188f23ca30f5d019410d117d2.js": "/duck-follow/precache-manifest.8bb0afd188f23ca30f5d019410d117d2.js",
     "service-worker.js": "/duck-follow/service-worker.js",
     "static/css/2.c41f91ad.chunk.css.map": "/duck-follow/static/css/2.c41f91ad.chunk.css.map",
-    "static/css/main.f05d446f.chunk.css.map": "/duck-follow/static/css/main.f05d446f.chunk.css.map",
-    "static/js/2.02ffbc4d.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.02ffbc4d.chunk.js.LICENSE.txt",
+    "static/css/main.6cdccf60.chunk.css.map": "/duck-follow/static/css/main.6cdccf60.chunk.css.map",
+    "static/js/2.26470417.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.26470417.chunk.js.LICENSE.txt",
+    "static/media/bin.svg": "/duck-follow/static/media/bin.650cdc57.svg",
     "static/media/duck.svg": "/duck-follow/static/media/duck.7cb5d820.svg",
     "static/media/facebook.svg": "/duck-follow/static/media/facebook.06468580.svg",
     "static/media/github.svg": "/duck-follow/static/media/github.42d4d371.svg",
@@ -26,8 +27,8 @@
   "entrypoints": [
     "static/js/runtime-main.10a00341.js",
     "static/css/2.c41f91ad.chunk.css",
-    "static/js/2.02ffbc4d.chunk.js",
-    "static/css/main.f05d446f.chunk.css",
-    "static/js/main.b570a0b5.chunk.js"
+    "static/js/2.26470417.chunk.js",
+    "static/css/main.6cdccf60.chunk.css",
+    "static/js/main.7a35e2a9.chunk.js"
   ]
 }
