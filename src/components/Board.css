@@ -115,8 +115,8 @@
   
   /* Style the checkmark/indicator */
   .container-checkbox .checkmark:after {
-    left: 9px;
-    top: 5px;
+    left: 10px;
+    top: 7px;
     width: 5px;
     height: 10px;
     border: solid white;

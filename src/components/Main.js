@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 // import logo from './logo.svg';
 import duck from '../assets/img/duck.svg';
 import profile from '../assets/img/profile.jpg';
@@ -17,6 +18,8 @@ import Timeline from './Timeline'
 import Lottie from 'react-lottie';
 import animationData from '../assets/img/analytics.json'
 import Board from './Board'
+import duck_logo from '../assets/img/duck-blue-style.json';
+import logo from '../logo.svg';
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -40,11 +43,25 @@ export default class Main extends React.Component {
             preserveAspectRatio: 'xMidYMid slice'
           }
       };
+
+      const duckfollow = {
+        loop: true,
+        autoplay: true, 
+        animationData: duck_logo,
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
         return (
             <div className="App">
             <section>
               <header className="App-header">
-                <img src={duck} className="App-logo" alt="logo" />
+                {/* <img src={duck} className="App-logo" alt="logo" /> */}
+                <Lottie options={duckfollow}
+                  height={300}
+                  width={300}
+                  isStopped={this.state.isStopped}
+                  isPaused={this.state.isPaused}/>
                 <p>
                   Edit <code>src/App.js</code> and save to reload.
                 </p>
@@ -128,6 +145,16 @@ export default class Main extends React.Component {
                     <img src="https://lh3.googleusercontent.com/woEQJUcdb0M8O96zNuGnEhhn2uJBS4h1GkmTaJSxePzjFm6nhHeLToPuFF8_AU9sras=s180-rw"/>
                   </a>
                 </div>
+              </div>
+            </section>
+            <section>
+              <div className="App-content">
+                  <img src={logo} width={200} height={200} id="PopoverLegacy"/>
+                  <UncontrolledPopover trigger="click" placement="top" target="PopoverLegacy">
+                    {/* <PopoverHeader>Legacy Trigger</PopoverHeader> */}
+                    <PopoverBody>
+                      Thank You for dowload.</PopoverBody>
+                  </UncontrolledPopover>
               </div>
             </section>
             <section>
