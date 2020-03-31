@@ -132,25 +132,41 @@ export default class Main extends React.Component {
             <section>
               <div className="App-content">
                 <div>
-                  <a href="https://play.google.com/store/apps/details?id=com.prasit.theboxshop" target="_blank">
+                  <a id="theboxshop" href="https://play.google.com/store/apps/details?id=com.prasit.theboxshop" target="_blank">
                     <img src="https://lh3.googleusercontent.com/WZeG1MyE8bpBt1cHMBAuoRUghGOWE23P7Ji28yMyUWF-90kTy6GPgDOm0rqvvgYOx-E=s180-rw"/>
                   </a>
-                  <a href="https://play.google.com/store/apps/details?id=com.prasit.shopmanager" target="_blank">
+                  <a id="shopmanager" href="https://play.google.com/store/apps/details?id=com.prasit.shopmanager" target="_blank">
                     <img src="https://lh3.googleusercontent.com/kuN3ko72k14yuetGz21EFJrekBQC5Gat_3WWVhFaWasm8aLHDh6KdYIUsji_9thZu2wb=s180-rw"/>
                   </a>
-                  <a href="https://play.google.com/store/apps/details?id=me.duckfollow.ozone" target="_blank">
+                  <a id="ozone" href="https://play.google.com/store/apps/details?id=me.duckfollow.ozone" target="_blank">
                     <img src="https://lh3.googleusercontent.com/4D1CU1oKP1RRC4NX45ZGbYGd9AuqpiYpTMDxuUi1iLwN8KG4PGEt3jjmJ8zyUWeLVLo=s180-rw"/>
                   </a>
-                  <a href="https://play.google.com/store/apps/details?id=me.duckfollow.qrcode" target="_blank">
+                  <a id="qrcode" href="https://play.google.com/store/apps/details?id=me.duckfollow.qrcode" target="_blank">
                     <img src="https://lh3.googleusercontent.com/woEQJUcdb0M8O96zNuGnEhhn2uJBS4h1GkmTaJSxePzjFm6nhHeLToPuFF8_AU9sras=s180-rw"/>
                   </a>
                 </div>
+                <UncontrolledPopover trigger="hover" placement="bottom" target="theboxshop">
+                  <PopoverHeader>The Box Shop เปิดร้านค้าออนไลน์</PopoverHeader>
+                  <PopoverBody>เปิดร้านค้าออไลน์ได้ง่ายๆ มาพร้อมบริการจัดการหน้าร้าน</PopoverBody>
+                </UncontrolledPopover>
+                <UncontrolledPopover trigger="hover" placement="bottom" target="shopmanager">
+                  <PopoverHeader>krap krap จัดการร้านค้า</PopoverHeader>
+                  <PopoverBody>ระบบจัดการคิวร้านค้า พร้อม E-Slip</PopoverBody>
+                </UncontrolledPopover>
+                <UncontrolledPopover trigger="hover" placement="bottom" target="ozone">
+                  <PopoverHeader>ozone not included ตรวจฝุ่น PM 2.5</PopoverHeader>
+                  <PopoverBody>วัดระดับค่าฝุ่น PM 2.5</PopoverBody>
+                </UncontrolledPopover>
+                <UncontrolledPopover trigger="hover" placement="bottom" target="qrcode">
+                  <PopoverHeader>สร้าง QR Code</PopoverHeader>
+                  <PopoverBody>สร้างและแสกน QR Code</PopoverBody>
+                </UncontrolledPopover>
               </div>
             </section>
             <section>
               <div className="App-content">
                   <img src={logo} width={200} height={200} id="PopoverLegacy"/>
-                  <UncontrolledPopover trigger="click" placement="top" target="PopoverLegacy">
+                  <UncontrolledPopover trigger="hover" placement="top" target="PopoverLegacy">
                     {/* <PopoverHeader>Legacy Trigger</PopoverHeader> */}
                     <PopoverBody>
                       Thank You for dowload.</PopoverBody>
