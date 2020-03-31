@@ -19,19 +19,23 @@ import Lottie from 'react-lottie';
 import animationData from '../assets/img/analytics.json'
 import Board from './Board'
 import duck_logo from '../assets/img/duck-blue-style.json';
-import logo from '../logo.svg';
+import logo from '../logo2.svg';
+import sport from '../assets/img/sport.svg';
 
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
-    this.state = { value: 0, previous: 0 ,isStopped: false, isPaused: false};
+    this.state = { value: 0, previous: 0 ,isStopped: false, isPaused: false,speed: 1};
     this.handleScrollToElement = this.handleScrollToElement.bind(this);
   }
 
   handleScrollToElement(event) {
-    if (true){
+    this.setState({speed: this.state.speed+0.5})
+    console.log(this.state.speed)
+    if (this.state.speed > 4){
       window.scrollTo(0, this.myRef.current.offsetTop);
+      this.setState({speed: 1})
     }
   }
     render() {
@@ -60,22 +64,23 @@ export default class Main extends React.Component {
                 <Lottie options={duckfollow}
                   height={300}
                   width={300}
+                  speed={this.state.speed}
                   isStopped={this.state.isStopped}
                   isPaused={this.state.isPaused}/>
                 <p>
                   Edit <code>src/App.js</code> and save to reload.
                 </p>
                 <a
-                  className="App-link"
+                  className="button-speed noselect"
                   onClick={this.handleScrollToElement}
                   rel="noopener noreferrer">
-                  Learn React
+                  <img className="icon-btn-speed" src={sport}/>Click to Learn React
                 </a>
               </header>
             </section>
             <section ref={this.myRef}>
               <div className="App-content">
-                <img src={profile} className="img-circle img-profile" alt="logo" />
+                <img src={profile} className="img-circle img-profile noselect" alt="logo" />
                 <p>
                   Prasit Suphancho
                 </p>
