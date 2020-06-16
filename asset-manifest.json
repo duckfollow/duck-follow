@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/duck-follow/static/css/main.8708f8ba.chunk.css",
-    "main.js": "/duck-follow/static/js/main.3957697c.chunk.js",
-    "main.js.map": "/duck-follow/static/js/main.3957697c.chunk.js.map",
+    "main.css": "/duck-follow/static/css/main.ea49a235.chunk.css",
+    "main.js": "/duck-follow/static/js/main.646b6784.chunk.js",
+    "main.js.map": "/duck-follow/static/js/main.646b6784.chunk.js.map",
     "runtime-main.js": "/duck-follow/static/js/runtime-main.10a00341.js",
     "runtime-main.js.map": "/duck-follow/static/js/runtime-main.10a00341.js.map",
     "static/css/2.892ff830.chunk.css": "/duck-follow/static/css/2.892ff830.chunk.css",
-    "static/js/2.2e15e202.chunk.js": "/duck-follow/static/js/2.2e15e202.chunk.js",
-    "static/js/2.2e15e202.chunk.js.map": "/duck-follow/static/js/2.2e15e202.chunk.js.map",
+    "static/js/2.cd7a94b6.chunk.js": "/duck-follow/static/js/2.cd7a94b6.chunk.js",
+    "static/js/2.cd7a94b6.chunk.js.map": "/duck-follow/static/js/2.cd7a94b6.chunk.js.map",
     "index.html": "/duck-follow/index.html",
-    "precache-manifest.c73777883413c2fe242ba372fb09705c.js": "/duck-follow/precache-manifest.c73777883413c2fe242ba372fb09705c.js",
+    "precache-manifest.5fae5f9f51cf75350840b9da72017827.js": "/duck-follow/precache-manifest.5fae5f9f51cf75350840b9da72017827.js",
     "service-worker.js": "/duck-follow/service-worker.js",
     "static/css/2.892ff830.chunk.css.map": "/duck-follow/static/css/2.892ff830.chunk.css.map",
-    "static/css/main.8708f8ba.chunk.css.map": "/duck-follow/static/css/main.8708f8ba.chunk.css.map",
-    "static/js/2.2e15e202.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.2e15e202.chunk.js.LICENSE.txt",
+    "static/css/main.ea49a235.chunk.css.map": "/duck-follow/static/css/main.ea49a235.chunk.css.map",
+    "static/js/2.cd7a94b6.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.cd7a94b6.chunk.js.LICENSE.txt",
     "static/media/318x180.svg": "/duck-follow/static/media/318x180.d5ff1945.svg",
     "static/media/KU_Logo.png": "/duck-follow/static/media/KU_Logo.cc35a46b.png",
     "static/media/android_logo.svg": "/duck-follow/static/media/android_logo.ac3421ce.svg",
+    "static/media/ar-camera.svg": "/duck-follow/static/media/ar-camera.8621c6ad.svg",
     "static/media/arrow.svg": "/duck-follow/static/media/arrow.d648020d.svg",
     "static/media/basket.svg": "/duck-follow/static/media/basket.9c1c6dbe.svg",
     "static/media/bin.svg": "/duck-follow/static/media/bin.650cdc57.svg",
@@ -29,6 +30,7 @@
     "static/media/instagram.svg": "/duck-follow/static/media/instagram.62593ffa.svg",
     "static/media/log_fab.png": "/duck-follow/static/media/log_fab.07fdac92.png",
     "static/media/logo2.svg": "/duck-follow/static/media/logo2.d22c693b.svg",
+    "static/media/logout.svg": "/duck-follow/static/media/logout.e75855a1.svg",
     "static/media/profile.jpg": "/duck-follow/static/media/profile.b9ec4ef9.jpg",
     "static/media/shield.svg": "/duck-follow/static/media/shield.315b768e.svg",
     "static/media/sport.svg": "/duck-follow/static/media/sport.5249afb9.svg",
@@ -40,8 +42,8 @@
   "entrypoints": [
     "static/js/runtime-main.10a00341.js",
     "static/css/2.892ff830.chunk.css",
-    "static/js/2.2e15e202.chunk.js",
-    "static/css/main.8708f8ba.chunk.css",
-    "static/js/main.3957697c.chunk.js"
+    "static/js/2.cd7a94b6.chunk.js",
+    "static/css/main.ea49a235.chunk.css",
+    "static/js/main.646b6784.chunk.js"
   ]
 }
