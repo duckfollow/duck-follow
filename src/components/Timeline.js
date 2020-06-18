@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as firebase from 'firebase';
 import './Timeline.css';
 import Swiper from 'react-id-swiper';
@@ -6,6 +6,11 @@ import android_logo from '../assets/img/android_logo.svg'
 import ku_logo from '../assets/img/KU_Logo.png'
 
 export default class Timeline extends React.Component {
+    
+    constructor(props) {
+        super(props)
+    }
+
     render() {
         const params = {
             slidesPerView: 3,
@@ -13,6 +18,7 @@ export default class Timeline extends React.Component {
             loop: false,
             direction: 'horizontal',
             watchOverflow: true,
+            autoplay: false,
             pagination: {
               el: '.swiper-pagination',
               type: 'bullets',

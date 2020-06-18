@@ -21,23 +21,89 @@ import Board from './Board'
 import duck_logo from '../assets/img/duck-blue-style.json';
 import logo from '../logo2.svg';
 import sport from '../assets/img/sport.svg';
+import ProgressView from './ProgressView'
+import Covid19 from './Covid19'
+import { Container, Row, Col } from 'reactstrap';
+import PlayerScore from './PlayerScore'
+import Android_Studio from '../assets/img/Android_Studio.png'
+import ListArticle from './ListArticle'
 
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
-    this.state = { value: 0, previous: 0 ,isStopped: false, isPaused: false,speed: 1};
     this.handleScrollToElement = this.handleScrollToElement.bind(this);
+    let d = new Date()
+    this.state = {
+      day: d.getDay(),
+      month: d.getMonth() + 1 < 10 ? "0"+(d.getMonth()+1): d.getMonth()+1,
+      date: d.getDate() < 10 ? "0"+d.getDate() : d.getDate(),
+      year: d.getFullYear(),
+      time: d.toLocaleTimeString(),
+      value: 0, 
+      previous: 0,
+      isStopped: false, 
+      isPaused: false,
+      speed: 1,
+      isClick: true,
+      id:''
+    }
+    this.countingSecond = this.countingSecond.bind(this)
+    this.generateUser = this.generateUser.bind(this)
+  }
+
+  countingSecond() {
+    let d = new Date()
+    this.setState({
+      day: d.getDay(),
+      month: d.getMonth() + 1 < 10 ? "0"+(d.getMonth()+1): d.getMonth()+1,
+      date: d.getDate() < 10 ? "0"+d.getDate() : d.getDate(),
+      year: d.getFullYear(),
+      time: d.toLocaleTimeString()
+    })
+  }
+  componentWillMount() {
+    setInterval(this.countingSecond, 1000)
+    const user = localStorage.getItem('user')
+    if (user === null) {
+      let id = this.generateUser()
+      this.setState({
+        id:id
+      })
+      localStorage.setItem('user', id);
+    } else {
+      this.setState({
+        id:user
+      })
+    }
   }
 
   handleScrollToElement(event) {
-    this.setState({speed: this.state.speed+0.5})
-    console.log(this.state.speed)
-    if (this.state.speed > 4){
-      window.scrollTo(0, this.myRef.current.offsetTop);
-      this.setState({speed: 1})
+    if (this.state.isClick) {
+      this.setState({isClick: false})
+      let timerId = setInterval(()=>{
+        let timer = this.state.speed + 1.5
+        this.setState({speed: timer})
+        if (timer > 4){
+          window.scrollTo(0, this.myRef.current.offsetTop);
+          this.setState({speed: 1,isClick: true})
+          clearInterval(timerId)
+        }
+      }, 1000)
     }
   }
+
+  generateUser () {
+    var _sym = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    var str = '';
+
+    for(var i = 0; i < 6; i++) {
+        str += _sym[parseInt(Math.random() * (_sym.length))];
+    }
+
+    return 'GM-' + str;
+  }
+
     render() {
       const defaultOptions = {
           loop: true,
@@ -58,6 +124,7 @@ export default class Main extends React.Component {
     };
         return (
             <div className="App">
+              <ProgressView/>
             <section>
               <header className="App-header">
                 {/* <img src={duck} className="App-logo" alt="logo" /> */}
@@ -78,10 +145,15 @@ export default class Main extends React.Component {
                 </a>
               </header>
             </section>
+            {/* <section>
+              <div className="App-content">
+                <Covid19/>
+              </div>
+            </section> */}
             <section ref={this.myRef}>
               <div className="App-content">
                 <img src={profile} className="img-circle img-profile noselect" alt="logo" />
-                <p>
+                <p className="noselect">
                   Prasit Suphancho
                 </p>
                 <div>
@@ -100,9 +172,12 @@ export default class Main extends React.Component {
                 </div>
               </div>
             </section>
+            {/* <section className="App-content">
+              <ListArticle/>
+            </section> */}
             <section>
               <div className="App-content">
-                <h1>made application</h1>
+                <h1 className="noselect">made application</h1>
                 <div>
                   {/* <a href="">
                     <img src={logoboxshop} className="app-icon" alt="logo" />
@@ -126,12 +201,17 @@ export default class Main extends React.Component {
             </section>
             <section>
               <div className="App-content">
+                <h1 className="noselect">{this.state.date}:{this.state.month}:{this.state.year}:{this.state.time}</h1>
+              </div>
+            </section>
+            <section>
+              <div className="App-content">
                <Timeline/>
               </div>
             </section>
             <section>
               <div className="App-content">
-                <h1>Products</h1>
+                <h1 className="noselect">Products</h1>
               </div>
             </section>
             <section>
@@ -178,6 +258,40 @@ export default class Main extends React.Component {
                   </UncontrolledPopover>
               </div>
             </section>
+            {/* <section>
+              <div className="App-content">
+                  <h1 className="ux-ui noselect">UX/UI</h1>
+              </div>
+            </section>
+            <section>
+              <div className="App-content">
+                 
+              </div>
+            </section>
+            <section>
+              <div className="App-content">
+                  <h1 className="event-text noselect">EVENTS</h1>
+              </div>
+            </section>
+            <section>
+              <div className="App-content">
+                  <h1 className="noselect">Make Game tomorrow!</h1>
+              </div>
+            </section>
+            <section>
+              <div className="App-content">
+                  <Container>
+                    <Row>
+                      <Col md="6">
+                      <Link to={`/game/${this.state.id}`}>เริ่มเกม</Link>
+                      </Col>
+                      <Col md="6">
+                        <PlayerScore/>
+                      </Col>
+                    </Row>
+                  </Container>
+              </div>
+            </section> */}
             <section>
               <div className="App-content">
               <Lottie options={defaultOptions}

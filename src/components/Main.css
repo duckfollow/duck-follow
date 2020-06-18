@@ -11,7 +11,7 @@
 }
 
 .button-speed {
-    background-color: #4CAF50; /* Green */
+    background-color: rgba(76, 175, 79, 0.568); /* Green */
     border: none;
     color: white;
     padding: 10px 15px;
@@ -22,14 +22,26 @@
     cursor: -webkit-grab; 
     cursor: grab;
     border-radius: 5px;
-  }
+}
 
-  .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Old versions of Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
+.button-speed:hover {
+  background-color: #4CAF50;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Opera and Firefox */
-  }
+}
+
+.ux-ui {
+  font-size: 3em;
+}
+
+.event-text {
+  font-size: 3em;
+}

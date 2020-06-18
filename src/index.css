@@ -34,11 +34,13 @@ code {
 }
 
 html { /* body won't work ¯\_(ツ)_/¯ */
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory !important;
+  scroll-behavior: smooth !important;
+  /* height: 100vh;
+  overflow-y: scroll; */
 }
 
-section {
+html section {
   height: 100vh;
-  scroll-snap-align: start;
+  /* scroll-snap-align: start start !important; */
 }
