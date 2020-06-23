@@ -162,7 +162,7 @@ export default class ShopInvoice extends React.Component {
                       <p>สินค้า</p>
                       {this.state.dataCart.map(item => (
                         <div key={item.keyid}>
-                          <img width={40} height={40} src={item.profile_picture} alt="Card image cap" />
+                          <img width={40} height={40} src={item.picture} alt="Card image cap" />
                           {item.keyid}<br/>
                           ราคา {item.price_product}
                         </div>
@@ -195,7 +195,7 @@ export default class ShopInvoice extends React.Component {
                   </div>
                   <div>
                     <p>อัพโหลดใบเสร็จ</p>
-                    <input type="file" name="file" onChange={this.handleChange.bind(this)} />
+                    <input type="file" name="file" onChange={this.handleChange.bind(this)} accept="image/*"/>
                     <Container>
                       <Row>
                         <Col md={8}>
@@ -211,8 +211,6 @@ export default class ShopInvoice extends React.Component {
                         </Col>
                       </Row>
                     </Container>
-                    
-                    
                   </div>
                   <h3>ช่องทางการชำระ</h3>
                   <p>*หากไม่มีการชำระภายใน 7 วันระบบจำทำการยกเลิกรายการสั่งซื้อโดยอัตโนมัติ</p>
@@ -221,10 +219,10 @@ export default class ShopInvoice extends React.Component {
               </div>
               <br/>
               <Row>
-                <Col>
+                <Col xs={12} md={6}>
                   <Button outline color="primary" onClick={this.onBack.bind(this)}>กลับไปที่หน้าหลัก</Button>
                 </Col>
-                <Col>
+                <Col xs={12} md={6}>
                   <Button>พิมพ์ใบเสร็จ</Button>
                 </Col>
               </Row> 

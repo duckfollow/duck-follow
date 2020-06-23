@@ -63,12 +63,15 @@ export default class ShopCart extends React.Component {
           let price = 0;   
           snapshot.forEach(productSnapshot => {
             let data = productSnapshot.val();
+            // console.log(data)
             dataStorageCart.push({
               keyid:productSnapshot.key,
+              key_product: data.keyid,
               name_product:data.name_product,
               details_product:data.details_product,
               price_product:data.price_product,
-              profile_picture:data.profile_picture,
+              amount_product: data.amount_product,
+              picture:data.picture,
               });
               price =  price + Number(data.price_product)
         });
@@ -104,12 +107,31 @@ export default class ShopCart extends React.Component {
         
       }
 
-      handleRemoveCart(event) {
-        console.log(event.target.value)
+      handleRemoveCart(key,index) {
+        console.log(key)
+        console.log(index)
         var id = localStorage.getItem('id');
         const dataRef = firebase.database()
-        const key_value = event.target.value
-        dataRef.ref("cartweb/"+id).child(key_value).remove();
+        const key_value = key
+        var data = this.state.dataCart[index]
+        const refProduct = dataRef.ref("productsweb/"+data.key_product);
+        console.log(data)
+        var amount_product = 0
+        refProduct.on('value', (product) => {
+          var data_product = product.val();
+          console.log(data_product)
+          amount_product = data_product.amount_product
+           
+        })
+        dataRef.ref("cartweb/"+id).child(key_value).remove().then(function() {
+          console.log("Remove succeeded.")
+          refProduct.update({
+            amount_product: amount_product  + 1
+          })
+        })
+        .catch(function(error) {
+          console.log("Remove failed: " + error.message)
+        });
       }
 
       clickInvoice() {
@@ -173,12 +195,12 @@ export default class ShopCart extends React.Component {
                   <Row>
                     <Col md="6">
                     <h2>ตะกร้าสินค้า</h2>
-                      {this.state.dataCart.map(item => (
+                      {this.state.dataCart.map((item,index) => (
                           <Card className="card-view-cart" key={item.keyid}>
                               <CardBody>
-                                  <img width={40} height={40} src={item.profile_picture} alt="Card image cap" />
+                                  <img width={40} height={40} src={item.picture} alt="Card image cap" />
                                   {item.keyid}
-                                  <Button outline color="danger" size="sm" value={item.keyid} onClick={this.handleRemoveCart}>ลบ</Button>
+                                  <Button outline color="danger" size="sm" value={item.keyid} onClick={this.handleRemoveCart.bind(this,item.keyid,index)}>ลบ</Button>
                               </CardBody>
                           </Card>
                       ))}

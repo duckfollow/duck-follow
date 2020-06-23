@@ -29,6 +29,7 @@ import img_user from '../assets/img/user.svg'
 import ChatBot from 'react-simple-chatbot';
 import * as firebase from 'firebase';
 import { ToastContainer, toast } from 'react-toastify';
+import {Toast, ToastBody, ToastHeader } from 'reactstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import {
     Carousel,
@@ -40,6 +41,8 @@ import {
 import imgp from "../assets/img/imgp1.png";
 import imgp2 from "../assets/img/imgp2.png";
 import imgp3 from "../assets/img/imgp3.png";
+import banner from "../assets/img/banner.png";
+import classnames from 'classnames';
 export default class Shop extends React.Component {
 
     constructor(props) {
@@ -55,32 +58,19 @@ export default class Shop extends React.Component {
             isShowBanner: false,
             dataShowSlide: [],
             textCaption: '',
-            id: 'id'
+            textPrice: '',
+            textDetails: '',
+            id: 'id',
+            clickAddCart: false,
+            text: ""
         };
 
         this.brakePoints = [600, 750, 1024];
         this.images = [];
-        this.items = [
-            {
-              src: imgp,
-              altText: 'Slide 1',
-              caption: 'Slide 1'
-            },
-            {
-              src: imgp2,
-              altText: 'Slide 2',
-              caption: 'Slide 2'
-            },
-            {
-              src: imgp3,
-              altText: 'Slide 3',
-              caption: 'Slide 3'
-            }
-          ];
     }
 
     componentDidMount(){
-        const dataList = firebase.database().ref('test');
+        const dataList = firebase.database().ref('productsweb');
     
         dataList.on('value', (snapshot) => {
           let freBaseData = snapshot.val();
@@ -95,7 +85,8 @@ export default class Shop extends React.Component {
               name_product:data.name_product,
               details_product:data.details_product,
               price_product:data.price_product,
-              profile_picture:data.profile_picture,
+              amount_product: data.amount_product,
+              picture:data.picture,
             });
             if (data.status === 1) {
                 dataShowBanner.push({
@@ -103,19 +94,32 @@ export default class Shop extends React.Component {
                     name_product:data.name_product,
                     details_product:data.details_product,
                     price_product:data.price_product,
-                    profile_picture:data.profile_picture,
-                    src: data.profile_picture,
+                    amount_product: data.amount_product,
+                    picture:data.picture,
+                    src: data.picture,
                     altText: data.name_product,
                     caption: data.name_product
                 });
             }
         });
 
-          this.setState({
-            dataShow: dataStorage,
-            dataShowSlide: dataShowBanner,
-            textCaption: dataShowBanner[0].caption
-          });
+            try {
+                this.setState({
+                    textCaption: dataShowBanner[0].caption,
+                    textPrice: dataShowBanner[0].price_product,
+                    textDetails: dataShowBanner[0].details_product
+                  });
+            }catch(err) {
+
+            }
+            try {
+                this.setState({
+                    dataShow: dataStorage,
+                    dataShowSlide: dataShowBanner
+                  });
+            }catch (err) {
+
+            }
         }); 
 
         var id = localStorage.getItem('id');
@@ -134,7 +138,7 @@ export default class Shop extends React.Component {
               name_product:data.name_product,
               details_product:data.details_product,
               price_product:data.price_product,
-              profile_picture:data.profile_picture,
+              picture:data.picture,
               });
         });
 
@@ -143,8 +147,6 @@ export default class Shop extends React.Component {
           });
         });
 
-
-        
         var firstname = localStorage.getItem('firstname')
         console.log(firstname)
         if (id !== null) {
@@ -157,7 +159,7 @@ export default class Shop extends React.Component {
         const dataWeb = firebase.database().ref('web_setting/banner');
         dataWeb.on('value', (snapshot) => {
           let dataSetting = snapshot.val();
-          this.setState({isShowBanner:dataSetting.isShow})
+          this.setState({isShowBanner:dataSetting.isShow,text:dataSetting.text})
           console.log(dataSetting.isShow)
         });
 
@@ -166,23 +168,40 @@ export default class Shop extends React.Component {
       handleAddCart(index) {
         // console.log(index)
         // console.log(this.state.dataShow[index])
+        this.setState({clickAddCart: true})
         const dataRef = firebase.database()
         const context = this
         var data = this.state.dataShow[index]
-        dataRef.ref("cartweb/"+this.state.id).push(data).then(function () {
-            console.log("success")
-            toast.success('เพิ่มสินค้าในตะกร้าแล้ว', {
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            }, function () {
-            console.log('rejected promise')
-        }).catch((e) => console.log(e))
+        const refProduct = dataRef.ref("productsweb/"+data.keyid);
+        var amount_product = 0
+        refProduct.on('value', (product) => {
+          var data_product = product.val();
+          console.log(data_product)
+          amount_product = data_product.amount_product
+        })
+        if (amount_product > 0) {
+            dataRef.ref("cartweb/"+this.state.id).push(data).then(function () {
+                console.log("success")
+                toast.dark('🛒 เพิ่มสินค้าในตะกร้าแล้ว', {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: 0,
+                });
+                refProduct.update({
+                    amount_product: amount_product - 1
+                }).then(function() {
+                    context.setState({clickAddCart: false})
+                })
+                }, function () {
+                console.log('rejected promise')
+            }).catch((e) => console.log(e))
+        } else {
+
+        }
       }
 
     next = () => {
@@ -227,6 +246,10 @@ export default class Shop extends React.Component {
         this.setState({isChat:false})
     }
 
+    clickView(key) {
+        this.props.history.push('/view/'+key)
+    }
+
     render() {
         let chat_class = this.state.isChat ? "chat-popup-show" : "chat-popup-close";
         const steps = [
@@ -265,48 +288,52 @@ export default class Shop extends React.Component {
                     {
                         this.state.isShowBanner? 
                         <div className="card-promotion">
-                            <h6>ประกาศ</h6>
+                            <marquee>{this.state.text}</marquee>
                         </div>
                         :null
                     }
-                    <Jumbotron>
-                        <h1 className="display-3">สินค้าแนะนำ</h1>
-                        <hr className="my-2" />
-                        <Row>
-                        <Col md="6">
-                        <Carousel
-                            activeIndex={this.state.activeIndex}
-                            next={this.next}
-                            previous={this.previous}
-                            >
-                            <CarouselIndicators items={this.state.dataShowSlide} activeIndex={this.state.activeIndex} onClickHandler={this.goToIndex} />
-                            {this.state.dataShowSlide.map((item) => {
-                                    return (
-                                    <CarouselItem
-                                        onExiting={() => this.setState({animating:true,textCaption:this.state.dataShowSlide[this.state.activeIndex].caption})}
-                                        onExited={() => this.setState({animating:false,textCaption:this.state.dataShowSlide[this.state.activeIndex].caption})}
-                                        key={item.src}
-                                        autoPlay={true}
-                                    >
-                                        <img width="100%" src={item.src} alt={item.altText} />
-                                        <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
-                                    </CarouselItem>
-                                    );
-                                })
-                            }
-                            <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
-                            <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
-                        </Carousel>
-                        </Col>
-                        <Col md="6">
-                        <h3>{this.state.textCaption}</h3>
-                            <Row className="btn-position-bottom">
-                                <Col sm="6"><Button width="100%" className="btn-solid-secondary" onClick={this.handleAddCart.bind(this,this.state.activeIndex)}>เพิ่มไปยังตะกร้า</Button></Col>
-                                <Col sm="6"><Button width="100%" className="btn-solid-primary">ซื้อสินค้า</Button></Col>
+                    {this.state.dataShowSlide.length > 0?
+                        <Jumbotron>
+                            <h1>สินค้าแนะนำ</h1>
+                            <hr className="my-2" />
+                            <Row>
+                            <Col md="6">
+                            <Carousel
+                                activeIndex={this.state.activeIndex}
+                                next={this.next}
+                                previous={this.previous}
+                                >
+                                <CarouselIndicators items={this.state.dataShowSlide} activeIndex={this.state.activeIndex} onClickHandler={this.goToIndex} />
+                                {this.state.dataShowSlide.map((item) => {
+                                        return (
+                                        <CarouselItem
+                                            onExiting={() => this.setState({animating:true,textCaption:this.state.dataShowSlide[this.state.activeIndex].caption,textPrice:this.state.dataShowSlide[this.state.activeIndex].price_product,textDetails:this.state.dataShowSlide[this.state.activeIndex].details_product})}
+                                            onExited={() => this.setState({animating:false,textCaption:this.state.dataShowSlide[this.state.activeIndex].caption,textPrice:this.state.dataShowSlide[this.state.activeIndex].price_product,textDetails:this.state.dataShowSlide[this.state.activeIndex].details_product})}
+                                            key={item.src}
+                                            autoPlay={true}
+                                        >
+                                            <img className="img-slide" src={item.src} alt={item.altText} />
+                                            <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+                                        </CarouselItem>
+                                        );
+                                    })
+                                }
+                                <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
+                                <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
+                            </Carousel>
+                            </Col>
+                            <Col md="6" className="details-slide">
+                            <p className="textNameProduct">{this.state.textCaption}</p>
+                            <p className="textPrice">{this.state.textPrice}.-</p>
+                            <p>{this.state.textDetails}</p>
+                                <Row className="btn-position-bottom">
+                                    <Col sm="6"><Button width="100%" className="btn-solid-secondary" disabled={this.state.clickAddCart} onClick={this.handleAddCart.bind(this,this.state.activeIndex)}>เพิ่มไปยังตะกร้า</Button></Col>
+                                    <Col sm="6"><Button width="100%" className="btn-solid-primary">ซื้อสินค้า</Button></Col>
+                                </Row>
+                            </Col>
                             </Row>
-                        </Col>
-                        </Row>
                     </Jumbotron>
+                    :null}
                     <h4>ขายดีประจำสัปดาห์</h4>
                     <Masonry 
                         brakePoints={this.brakePoints} 
@@ -328,14 +355,14 @@ export default class Shop extends React.Component {
                         }} ref={this.Masonry}>
                             {this.state.dataShow.map((data, id) => {
                                 return (
-                                    <Card className="card-view" key={id}>
-                                        <CardImg top width="100%" src={data.profile_picture} alt="Card image cap" />
+                                    <Card className="card-view" key={id} onClick={this.clickView.bind(this,data.keyid)}>
+                                        <CardImg top width="100%" src={data.picture} alt="Card image cap" />
                                         <CardBody>
                                             <CardTitle>{data.name_product}</CardTitle>
-                                            มีสินค้าทั้งหมด 27715 ชิ้น
+                                            มีสินค้าทั้งหมด {data.amount_product} ชิ้น
                                             <CardText>฿{data.price_product} </CardText>
                                             <Row>
-                                                <Col className="col-padding"><Button size="sm" className="btn-solid-secondary" onClick={this.handleAddCart.bind(this,id)}>เพิ่มไปยังตะกร้า</Button></Col>
+                                                <Col className="col-padding"><Button size="sm" className="btn-solid-secondary" disabled={data.amount_product <= 0 || this.state.clickAddCart} onClick={this.handleAddCart.bind(this,id)}>เพิ่มไปยังตะกร้า</Button></Col>
                                                 <Col className="col-padding"><Button size="sm" className="btn-solid-primary">ซื้อสินค้า</Button></Col>
                                             </Row>  
                                         </CardBody>
@@ -351,15 +378,11 @@ export default class Shop extends React.Component {
                         <h1 className="display-3">ติดต่อได้ที่</h1>
                         <p className="lead">50 หมุ่ 18 ต.สำราญใต้ อ.สามชัย จ.กาฬสินธุ์ 46180 เบอร์โทรติดต่อ 090 9931 282</p>
                         <hr className="my-2" />
-                        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                        <p className="lead">
-            
-                        </p>
                     </Jumbotron>
                     <ToastContainer
                         position="bottom-right"
                         autoClose={5000}
-                        hideProgressBar={false}
+                        hideProgressBar
                         newestOnTop={false}
                         closeOnClick
                         rtl={false}

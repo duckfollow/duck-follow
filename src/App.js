@@ -11,6 +11,9 @@ import ShopUserLogin from './components/ShopUserLogin'
 import ShopUser from './components/ShopUser'
 import ShopUserRegisterSuccess from './components/ShopUserRegisterSuccess'
 import Dashboard from './components/Dashboard'
+import ProductsAdd from './components/ProductsAdd'
+import ProductsView from './components/ProductsView'
+import ProductViewDetails from './components/ProductViewDetails'
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 function App() {
@@ -29,6 +32,9 @@ function App() {
         <Route path="/invoice/:orderid" component={shopinvoice} />
         <Route path="/profile" component={ShopUser} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/product-add" component={ProductsAdd} />
+        <Route path="/product-view/:key" component={ProductsView} />
+        <Route path="/view/:key" component={ProductViewDetails} />
       </div>
     </HashRouter>
   );
