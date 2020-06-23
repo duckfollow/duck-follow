@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/duck-follow/precache-manifest.7faefa1fcf70c5deb78c958136f80573.js"
+  "/duck-follow/precache-manifest.a85af9659c0ab3b56b5362afd9b728f2.js"
 );
 
 self.addEventListener('message', (event) => {
