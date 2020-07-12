@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/duck-follow/static/css/main.671be4b1.chunk.css",
-    "main.js": "/duck-follow/static/js/main.ebe18ff0.chunk.js",
-    "main.js.map": "/duck-follow/static/js/main.ebe18ff0.chunk.js.map",
+    "main.css": "/duck-follow/static/css/main.b0649bb2.chunk.css",
+    "main.js": "/duck-follow/static/js/main.b0b6cc6e.chunk.js",
+    "main.js.map": "/duck-follow/static/js/main.b0b6cc6e.chunk.js.map",
     "runtime-main.js": "/duck-follow/static/js/runtime-main.10a00341.js",
     "runtime-main.js.map": "/duck-follow/static/js/runtime-main.10a00341.js.map",
     "static/css/2.892ff830.chunk.css": "/duck-follow/static/css/2.892ff830.chunk.css",
     "static/js/2.2a302424.chunk.js": "/duck-follow/static/js/2.2a302424.chunk.js",
     "static/js/2.2a302424.chunk.js.map": "/duck-follow/static/js/2.2a302424.chunk.js.map",
     "index.html": "/duck-follow/index.html",
-    "precache-manifest.c9a6f279ff1ba53784ec0cedc39b79d0.js": "/duck-follow/precache-manifest.c9a6f279ff1ba53784ec0cedc39b79d0.js",
+    "precache-manifest.d8d1d7318a034c0c0af57f420ca5d887.js": "/duck-follow/precache-manifest.d8d1d7318a034c0c0af57f420ca5d887.js",
     "service-worker.js": "/duck-follow/service-worker.js",
     "static/css/2.892ff830.chunk.css.map": "/duck-follow/static/css/2.892ff830.chunk.css.map",
-    "static/css/main.671be4b1.chunk.css.map": "/duck-follow/static/css/main.671be4b1.chunk.css.map",
+    "static/css/main.b0649bb2.chunk.css.map": "/duck-follow/static/css/main.b0649bb2.chunk.css.map",
     "static/js/2.2a302424.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.2a302424.chunk.js.LICENSE.txt",
     "static/media/318x180.svg": "/duck-follow/static/media/318x180.d5ff1945.svg",
     "static/media/KU_Logo.png": "/duck-follow/static/media/KU_Logo.cc35a46b.png",
     "static/media/android_logo.svg": "/duck-follow/static/media/android_logo.ac3421ce.svg",
     "static/media/ar-camera.svg": "/duck-follow/static/media/ar-camera.8621c6ad.svg",
-    "static/media/arrow.svg": "/duck-follow/static/media/arrow.d648020d.svg",
+    "static/media/arrow.svg": "/duck-follow/static/media/arrow.939edac7.svg",
     "static/media/banner.png": "/duck-follow/static/media/banner.b060f483.png",
-    "static/media/basket.svg": "/duck-follow/static/media/basket.9c1c6dbe.svg",
+    "static/media/basket.svg": "/duck-follow/static/media/basket.3f767013.svg",
     "static/media/bin.svg": "/duck-follow/static/media/bin.650cdc57.svg",
     "static/media/confused.svg": "/duck-follow/static/media/confused.4d39e029.svg",
     "static/media/duck.svg": "/duck-follow/static/media/duck.7cb5d820.svg",
@@ -46,13 +46,13 @@
     "static/media/twitter.svg": "/duck-follow/static/media/twitter.f58833da.svg",
     "static/media/unhappy.svg": "/duck-follow/static/media/unhappy.a8fc3371.svg",
     "static/media/user.png": "/duck-follow/static/media/user.1a773ead.png",
-    "static/media/user.svg": "/duck-follow/static/media/user.a37279b6.svg"
+    "static/media/user.svg": "/duck-follow/static/media/user.1c7e13ae.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.10a00341.js",
     "static/css/2.892ff830.chunk.css",
     "static/js/2.2a302424.chunk.js",
-    "static/css/main.671be4b1.chunk.css",
-    "static/js/main.ebe18ff0.chunk.js"
+    "static/css/main.b0649bb2.chunk.css",
+    "static/js/main.b0b6cc6e.chunk.js"
   ]
 }
