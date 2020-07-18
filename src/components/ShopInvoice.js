@@ -164,6 +164,7 @@ export default class ShopInvoice extends React.Component {
                         <div key={item.keyid}>
                           <img width={40} height={40} src={item.picture} alt="Card image cap" />
                           {item.keyid}<br/>
+                          {item.name_product}<br/>
                           ราคา {item.price_product}
                         </div>
                       ))}

@@ -27,6 +27,9 @@ import { Container, Row, Col } from 'reactstrap';
 import PlayerScore from './PlayerScore'
 import Android_Studio from '../assets/img/Android_Studio.png'
 import ListArticle from './ListArticle'
+import img_cart from '../assets/img/basket.svg'
+import { Badge } from 'reactstrap';
+import * as firebase from 'firebase';
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -46,7 +49,8 @@ export default class Main extends React.Component {
       isPaused: false,
       speed: 1,
       isClick: true,
-      id:''
+      id:'',
+      dataOrder: []
     }
     this.countingSecond = this.countingSecond.bind(this)
     this.generateUser = this.generateUser.bind(this)
@@ -76,6 +80,37 @@ export default class Main extends React.Component {
         id:user
       })
     }
+  }
+
+  componentDidMount(){
+    const dataOrder = firebase.database().ref('orderweb');
+    dataOrder.on('value', (snapshot) => {
+      let freBaseData = snapshot.val();
+      let dataListOrder = [];    
+      snapshot.forEach(dataOrder => {
+        let data = dataOrder.val();
+        dataOrder.forEach(s => {
+          let order = s.val()
+          console.log(s.val())
+            if (order.status !== 2 && order.state !== 3) {
+              dataListOrder.push({
+                key:dataOrder.key,
+                keyorder:s.key,
+                img: order.product[0].picture,
+                product: order.product,
+                date_order: order.date_order,
+                price:order.price,
+                status:order.status
+              });
+            }
+          })
+    });
+
+      this.setState({
+        dataOrder: dataListOrder
+      });
+    });
+
   }
 
   handleScrollToElement(event) {
@@ -292,6 +327,18 @@ export default class Main extends React.Component {
                   </Container>
               </div>
             </section> */}
+            <section>
+              <div className="App-content">
+                <div>
+                  <Badge color="danger">จำนวนออร์เดอร์ {this.state.dataOrder.length}</Badge>
+                  <br/>
+                  <Link to="/shop">
+                    <img src={img_cart} width={100}/>
+                  </Link>
+                  
+                </div>
+              </div>
+            </section>
             <section>
               <div className="App-content">
               <Lottie options={defaultOptions}

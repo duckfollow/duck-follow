@@ -26,6 +26,7 @@ import { Link } from "react-router-dom";
 import './Shop.css';
 import img_cart from '../assets/img/basket.svg'
 import img_user from '../assets/img/user.svg'
+import img_fab from '../assets/img/fab-shop.svg'
 import ChatBot from 'react-simple-chatbot';
 import * as firebase from 'firebase';
 import { ToastContainer, toast } from 'react-toastify';
@@ -38,11 +39,13 @@ import {
     CarouselIndicators,
     CarouselCaption
   } from 'reactstrap';
+  import {Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import imgp from "../assets/img/imgp1.png";
 import imgp2 from "../assets/img/imgp2.png";
 import imgp3 from "../assets/img/imgp3.png";
 import banner from "../assets/img/banner.png";
 import classnames from 'classnames';
+import { Form, FormGroup, Label,Input } from 'reactstrap';
 export default class Shop extends React.Component {
 
     constructor(props) {
@@ -51,11 +54,13 @@ export default class Shop extends React.Component {
             isOpen: false,
             dataShow:[],
             dataCart:[],
-            firstname: "ลงทะเบียน",
+            firstname: "เข้าสู่ระบบ | สมัครสมาชิก",
             activeIndex: 0,
             animating: false,
             isChat: false,
             isShowBanner: false,
+            isShowPromo:false,
+            imgPromo: "",
             dataShowSlide: [],
             textCaption: '',
             textPrice: '',
@@ -70,8 +75,13 @@ export default class Shop extends React.Component {
     }
 
     componentDidMount(){
+        document.title = "duck shop - ร้านค้าออนไลน์"
+        let favicon = document.getElementById("favicon");
+        favicon.href = img_fab;
+
+        console.log(document.favicon)
+
         const dataList = firebase.database().ref('productsweb');
-    
         dataList.on('value', (snapshot) => {
           let freBaseData = snapshot.val();
           let dataStorage = [];
@@ -126,6 +136,7 @@ export default class Shop extends React.Component {
         if (id === null) {
             var id = 'id'
         }
+
         const dataCart = firebase.database().ref('cartweb/'+id);
     
         dataCart.on('value', (snapshot) => {
@@ -149,7 +160,7 @@ export default class Shop extends React.Component {
 
         var firstname = localStorage.getItem('firstname')
         console.log(firstname)
-        if (id !== null) {
+        if (id !== null && id != 'null') {
             this.setState({
                 id: id,
                 firstname: firstname
@@ -160,6 +171,13 @@ export default class Shop extends React.Component {
         dataWeb.on('value', (snapshot) => {
           let dataSetting = snapshot.val();
           this.setState({isShowBanner:dataSetting.isShow,text:dataSetting.text})
+          console.log(dataSetting.isShow)
+        });
+
+        const dataWebPromo = firebase.database().ref('web_setting/promotion');
+        dataWebPromo.on('value', (snapshot) => {
+          let dataSetting = snapshot.val();
+          this.setState({isShowPromo:dataSetting.isShow,imgPromo:dataSetting.img})
           console.log(dataSetting.isShow)
         });
 
@@ -195,6 +213,46 @@ export default class Shop extends React.Component {
                     amount_product: amount_product - 1
                 }).then(function() {
                     context.setState({clickAddCart: false})
+                })
+                }, function () {
+                console.log('rejected promise')
+            }).catch((e) => console.log(e))
+        } else {
+
+        }
+      }
+
+      handleAddCart2(index) {
+        // console.log(index)
+        // console.log(this.state.dataShow[index])
+        this.setState({clickAddCart: true})
+        const dataRef = firebase.database()
+        const context = this
+        var data = this.state.dataShow[index]
+        const refProduct = dataRef.ref("productsweb/"+data.keyid);
+        var amount_product = 0
+        refProduct.on('value', (product) => {
+          var data_product = product.val();
+          console.log(data_product)
+          amount_product = data_product.amount_product
+        })
+        if (amount_product > 0) {
+            dataRef.ref("cartweb/"+this.state.id).push(data).then(function () {
+                console.log("success")
+                // toast.dark('🛒 เพิ่มสินค้าในตะกร้าแล้ว', {
+                //     position: "top-right",
+                //     autoClose: 2000,
+                //     hideProgressBar: true,
+                //     closeOnClick: true,
+                //     pauseOnHover: true,
+                //     draggable: true,
+                //     progress: 0,
+                // });
+                refProduct.update({
+                    amount_product: amount_product - 1
+                }).then(function() {
+                    context.setState({clickAddCart: false})
+                    context.props.history.push('/shop-cart')
                 })
                 }, function () {
                 console.log('rejected promise')
@@ -250,6 +308,10 @@ export default class Shop extends React.Component {
         this.props.history.push('/view/'+key)
     }
 
+    clickHidePromo () {
+        this.setState({isShowPromo:false})
+    }
+
     render() {
         let chat_class = this.state.isChat ? "chat-popup-show" : "chat-popup-close";
         const steps = [
@@ -267,11 +329,11 @@ export default class Shop extends React.Component {
         return (
             <div>
                 <Container className="fixed-top">
-                    <Navbar color="light" light expand="md" className="nav-bar-border">
+                    <Navbar expand="md" className="nav-bar-border">
         <NavbarBrand><Link to={`/shop-login`} className="button-cart"> <img width={25} height={25} src={img_user}/></Link></NavbarBrand>
                             {/* <NavbarToggler onClick="" /> */}
                             {/* <Collapse isOpen="" navbar> */}
-                            <Nav className="mr-auto" navbar>
+                            <Nav id="txt-name" className="mr-auto" navbar>
                                 {this.state.firstname}
                             </Nav>
                             <NavbarText> 
@@ -284,7 +346,7 @@ export default class Shop extends React.Component {
                     <br/>
                     <br/>
                     <br/>
-                <Container>
+                <Container fluid={true}>
                     {
                         this.state.isShowBanner? 
                         <div className="card-promotion">
@@ -294,8 +356,6 @@ export default class Shop extends React.Component {
                     }
                     {this.state.dataShowSlide.length > 0?
                         <Jumbotron>
-                            <h1>สินค้าแนะนำ</h1>
-                            <hr className="my-2" />
                             <Row>
                             <Col md="6">
                             <Carousel
@@ -328,13 +388,13 @@ export default class Shop extends React.Component {
                             <p>{this.state.textDetails}</p>
                                 <Row className="btn-position-bottom">
                                     <Col sm="6"><Button width="100%" className="btn-solid-secondary" disabled={this.state.clickAddCart} onClick={this.handleAddCart.bind(this,this.state.activeIndex)}>เพิ่มไปยังตะกร้า</Button></Col>
-                                    <Col sm="6"><Button width="100%" className="btn-solid-primary">ซื้อสินค้า</Button></Col>
+                                    <Col sm="6"><Button width="100%" className="btn-solid-primary" disabled={this.state.clickAddCart} onClick={this.handleAddCart2.bind(this,this.state.activeIndex)}>ซื้อสินค้า</Button></Col>
                                 </Row>
                             </Col>
                             </Row>
                     </Jumbotron>
                     :null}
-                    <h4>ขายดีประจำสัปดาห์</h4>
+                    <h4 className="txt-header-sub">สินค้าแนะนำ</h4>
                     <Masonry 
                         brakePoints={this.brakePoints} 
                         loadingComponent = {()=>{return ''}}
@@ -355,15 +415,15 @@ export default class Shop extends React.Component {
                         }} ref={this.Masonry}>
                             {this.state.dataShow.map((data, id) => {
                                 return (
-                                    <Card className="card-view" key={id} onClick={this.clickView.bind(this,data.keyid)}>
-                                        <CardImg top width="100%" src={data.picture} alt="Card image cap" />
+                                    <Card className="card-view" key={id}>
+                                        <CardImg top width="100%" src={data.picture} alt="Card image cap" onClick={this.clickView.bind(this,data.keyid)}/>
                                         <CardBody>
                                             <CardTitle>{data.name_product}</CardTitle>
                                             มีสินค้าทั้งหมด {data.amount_product} ชิ้น
                                             <CardText>฿{data.price_product} </CardText>
                                             <Row>
                                                 <Col className="col-padding"><Button size="sm" className="btn-solid-secondary" disabled={data.amount_product <= 0 || this.state.clickAddCart} onClick={this.handleAddCart.bind(this,id)}>เพิ่มไปยังตะกร้า</Button></Col>
-                                                <Col className="col-padding"><Button size="sm" className="btn-solid-primary">ซื้อสินค้า</Button></Col>
+                                                <Col className="col-padding"><Button size="sm" className="btn-solid-primary" disabled={data.amount_product <= 0 || this.state.clickAddCart} onClick={this.handleAddCart2.bind(this,id)}>ซื้อสินค้า</Button></Col>
                                             </Row>  
                                         </CardBody>
                                     </Card>
@@ -373,11 +433,63 @@ export default class Shop extends React.Component {
 
                     {/* footer */}
                     <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    {/* <Row className="contact">
+                        <Col xs={12}>
+                        <center><h1>สมัครเป็นกลุ่มเกษตรกรออนไลน์</h1></center>
+                        </Col>
+                        <Col xs={12} md={6} className="content-contact">
+                            ศูนย์รวมสินค้าเกษตรกรออนไลน์
+                        </Col>
+                        <Col xs={12} md={6}>
+                            <Form>
+                                <Row form>
+                                <Col md={6}>
+                                    <FormGroup>
+                                    <Label for="exampleEmail">ชื่อ</Label>
+                                    <Input type="text" id="firstname"  placeholder=""/>
+                                    </FormGroup>
+                                </Col>
+                                <Col md={6}>
+                                    <FormGroup>
+                                    <Label for="examplePassword">นามสกุล</Label>
+                                    <Input type="text" id="lastname" placeholder=""/>
+                                    </FormGroup>
+                                </Col>
+                                </Row>
+                                <FormGroup>
+                                    <Label for="exampleAddress">เบอร์โทรศัพท์</Label>
+                                    <Input type="phone"/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="exampleAddress">จังหวัด</Label>
+                                    <Input type="text"/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="exampleAddress">ธุรกิจของคุณ</Label>
+                                    <Input type="text"/>
+                                </FormGroup>
+                                <Button outline color="success" size="lg">ลงทะเบียน</Button>
+                            </Form>
+                        </Col>
+                    </Row> */}
+
                     <hr/>
-                    <Jumbotron>
-                        <h1 className="display-3">ติดต่อได้ที่</h1>
-                        <p className="lead">50 หมุ่ 18 ต.สำราญใต้ อ.สามชัย จ.กาฬสินธุ์ 46180 เบอร์โทรติดต่อ 090 9931 282</p>
+                    <Jumbotron className="footer-custom">
+                        
+                        <Row>
+                            <Col xs={12} md={3}></Col>
+                            <Col xs={12} md={3}>
+                                <h6>ติดต่อได้ที่</h6>
+                                <p>50 หมุ่ 18 ต.สำราญใต้ อ.สามชัย จ.กาฬสินธุ์ 46180 เบอร์โทรติดต่อ 090 9931 282</p>
+                            </Col>
+                            <Col xs={12} md={3}></Col>
+                            <Col xs={12} md={3}></Col>
+                        </Row>
                         <hr className="my-2" />
+                        <p>@copy right duckfollow 2020</p>
                     </Jumbotron>
                     <ToastContainer
                         position="bottom-right"
@@ -395,6 +507,18 @@ export default class Shop extends React.Component {
                     <ChatBot steps={steps} />  
                 </div>
                 <Button className="open-button" onClick={this.openForm.bind(this)}>Chat</Button> */}
+
+                <Modal id="promo" isOpen={this.state.isShowPromo} toggle={this.clickHidePromo.bind(this)} centered>
+                    {/* <ModalHeader toggle={this.clickHidePromo.bind(this)}></ModalHeader> */}
+                    <ModalBody>
+                        <Button className="btn-close-promo" outline color="success" onClick={this.clickHidePromo.bind(this)}>X</Button>
+                        <img width="100%" src={this.state.imgPromo}/>
+                    </ModalBody>
+                    {/* <ModalFooter>
+                    <Button color="primary" onClick={this.clickHidePromo.bind(this)}>Do Something</Button>{' '}
+                    <Button color="secondary" onClick={this.clickHidePromo.bind(this)}>Cancel</Button>
+                    </ModalFooter> */}
+                </Modal>
             </div>
         )
     }

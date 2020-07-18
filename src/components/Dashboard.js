@@ -29,6 +29,7 @@ import img_arrow from '../assets/img/arrow.svg'
 import {InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
 import {TabContent, TabPane} from 'reactstrap';
 import classnames from 'classnames';
+import { Form, FormGroup, Label } from 'reactstrap';
 
 import * as firebase from 'firebase';
 
@@ -39,7 +40,9 @@ export default class Dashboard extends React.Component {
             activeTab: "1",
             dataOrder: [],
             dataProducts: [],
-            dataUser: []
+            dataUser: [],
+            isShowPromotion: false,
+            imgPromotion: ''
         };
     }
 
@@ -101,8 +104,24 @@ export default class Dashboard extends React.Component {
           let dataListUser = [];  
           
           snapshot.forEach(user => {
+            let data = user.val()
+            try {
+              var img = data.profile_picture
+            }catch(err) {
+              var img = ''
+            }
             dataListUser.push({
-              key: user.key
+              key: user.key,
+              firstname: data.firstname,
+              lastname: data.lastname,
+              picture: img,
+              phone: data.phone,
+              email: data.email,
+              address: data.address,
+              province: data.province,
+              amphoe: data.amphoe,
+              district: data.district,
+              zipcode: data.zipcode
             })
           })
 
@@ -110,6 +129,17 @@ export default class Dashboard extends React.Component {
             dataUser: dataListUser
           });
         });
+
+        const dataSetting = firebase.database().ref('web_setting/promotion/');
+        dataSetting.on('value', (snapshot) => {
+            var dataSetting = snapshot.val()
+            this.setState({
+              imgPromotion: dataSetting.img,
+              isShowPromotion : dataSetting.isShow
+            })
+            console.log(dataSetting)
+        });
+
       }
 
       toggle(i) {
@@ -122,6 +152,18 @@ export default class Dashboard extends React.Component {
 
       handleViewProduct(key) {
         this.props.history.push('/product-view/'+key)
+      }
+
+      onChangePromotion (event) {
+        const dataRef = firebase.database()
+        dataRef.ref("web_setting/promotion/").update({
+          isShow: event.target.value.toLowerCase() == 'true' ? true : false,
+            }).then(function () {
+                console.log("success")
+                alert("success")
+            }, function () {
+            console.log('rejected promise')
+        }).catch((e) => console.log(e))
       }
 
     render() {
@@ -153,7 +195,7 @@ export default class Dashboard extends React.Component {
                           </CardBody>
                         </Card>
                       </Col>
-                      <Col xs={6}>
+                      <Col xs={6} onClick={this.toggle.bind(this,"4")}>
                         <Card className="card-view-cart">
                           <CardBody>
                             Setting
@@ -197,11 +239,18 @@ export default class Dashboard extends React.Component {
                           {this.state.dataProducts.map(item => (
                               <Card className="card-view-cart" key={item.keyid}>
                                   <CardBody>
-                                    {item.keyid}<br/>
-                                    {item.name_product}<br/>
-                                    ราคา {item.price_product}
-                                    <Button outline color="info" size="sm" value={item.keyid} onClick={this.handleViewProduct.bind(this,item.keyid)}>view</Button>
-                                    {/* <Button outline color="danger" size="sm" value={item.key} onClick={this.handleCancelOrder.bind(this,item.key)}>cancel</Button> */}
+                                    <Row>
+                                      <Col xs={12} md={6}>
+                                        <img src={item.picture} width="100%"/>
+                                      </Col>
+                                      <Col xs={12} md={6}>
+                                        {item.keyid}<br/>
+                                        {item.name_product}<br/>
+                                        ราคา {item.price_product}
+                                        <Button outline color="info" size="sm" value={item.keyid} onClick={this.handleViewProduct.bind(this,item.keyid)}>view</Button>
+                                        {/* <Button outline color="danger" size="sm" value={item.key} onClick={this.handleCancelOrder.bind(this,item.key)}>cancel</Button> */}
+                                      </Col>
+                                    </Row>
                                   </CardBody>
                               </Card>
                             ))}
@@ -211,10 +260,39 @@ export default class Dashboard extends React.Component {
                           {this.state.dataUser.map(item => (
                               <Card className="card-view-cart" key={item.key}>
                                   <CardBody>
-                                    {item.key}<br/>
+                                    <Row>
+                                      <Col xs={3}>
+                                        <img src={item.picture} width="100%"/>
+                                      </Col>
+                                      <Col>
+                                      {item.key}<br/>
+                                      {item.firstname} {item.lastname} <br/>
+                                      {item.phone} {item.email} <br/>
+                                      ที่อยู่ <br/>
+                                      {item.address} {item.province} {item.amphoe} {item.district} {item.zipcode}
+                                      </Col>
+                                    </Row>
+                                    
                                   </CardBody>
                               </Card>
                             ))}
+                        </TabPane>
+                        <TabPane tabId="4">
+                          <h2>Setting</h2>
+                          <Row>
+                            <Col xs={12} md={6}>
+                              <img width="100%" src={this.state.imgPromotion}/>
+                            </Col>
+                            <Col xs={12} md={6}>
+                              <FormGroup>
+                                <Label for="exampleZip">promotion</Label>
+                                <Input type="select" name="select" id="exampleSelect" onChange={this.onChangePromotion.bind(this)} value={this.state.isShowPromotion}>     
+                                  <option value="true">เปิด</option>
+                                  <option value="false">ปิด</option>
+                                </Input>
+                              </FormGroup>
+                            </Col>
+                          </Row>
                         </TabPane>
                     </TabContent>
                    

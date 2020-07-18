@@ -45,3 +45,13 @@
 .event-text {
   font-size: 3em;
 }
+
+.view-cart-badge {
+  width: 100px;
+  height: 100px;
+  display: block;
+}
+
+.cart-Badge {
+  float: right;
+}

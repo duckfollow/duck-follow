@@ -32,25 +32,29 @@ export default class ShopUserRegisterSuccess extends React.Component {
     }
 
     componentDidMount(){
-        const { id } = this.props.match.params
-        console.log(id)
-        const dataCart = firebase.database().ref('userweb/'+id);
-        this.setState({url: "https://duckfollowtk.github.io/duck-follow/#/shop-regiter-success/"+id})
-    
-        dataCart.on('value', (snapshot) => {
-          let freBaseData = snapshot.val();
-          localStorage.setItem('id', id);
-          localStorage.setItem('firstname', freBaseData.firstname);
-          localStorage.setItem('lastname', freBaseData.lastname);
-          localStorage.setItem('address', freBaseData.address);
-          console.log(freBaseData)
-          this.setState({
-            id: id,
-            firstname: freBaseData.firstname,
-            lastname: freBaseData.lastname,
-            address: freBaseData.address
-          })
-        });
+          const { id } = this.props.match.params
+          console.log(id)
+          const dataCart = firebase.database().ref('userweb/'+id);
+          this.setState({url: "https://duckfollowtk.github.io/duck-follow/#/shop-regiter-success/"+id})
+      
+          dataCart.on('value', (snapshot) => {
+            try {
+              let freBaseData = snapshot.val();
+              localStorage.setItem('id', id);
+              localStorage.setItem('firstname', freBaseData.firstname);
+              localStorage.setItem('lastname', freBaseData.lastname);
+              localStorage.setItem('address', freBaseData.address);
+              console.log(freBaseData)
+              this.setState({
+                id: id,
+                firstname: freBaseData.firstname,
+                lastname: freBaseData.lastname,
+                address: freBaseData.address
+              })
+            } catch(err) {
+              this.props.history.push('/shop')
+            }
+          });
       }
 
       ok() {

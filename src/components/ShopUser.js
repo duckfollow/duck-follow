@@ -41,6 +41,7 @@ import smiling from '../assets/img/smiling.svg'
 import confused from '../assets/img/confused.svg'
 import sad from '../assets/img/sad.svg'
 import unhappy from '../assets/img/unhappy.svg'
+import img_fab from '../assets/img/fab-shop.svg'
 
 import * as firebase from 'firebase';
 
@@ -59,6 +60,10 @@ export default class ShopUser extends React.Component {
             firstname: '',
             lastname: '',
             address:'',
+            province: '',
+            amphoe: '',
+            district: '',
+            zipcode: '',
             profile_picture: profile,
             isUpload:false,
             isReview: false,
@@ -78,23 +83,57 @@ export default class ShopUser extends React.Component {
     }
 
     componentDidMount(){
+      document.title = "duck shop - ร้านค้าออนไลน์"
+      let favicon = document.getElementById("favicon");
+      favicon.href = img_fab;
+
       var id = localStorage.getItem('id');
       if (id === null) {
         var id = 'id'
       }
       const dataUser = firebase.database().ref('userweb/'+id);
       dataUser.on('value', (snapshot) => {
-        let freBaseData = snapshot.val();
-        localStorage.setItem('id', id);
-        localStorage.setItem('firstname', freBaseData.firstname);
-        localStorage.setItem('lastname', freBaseData.lastname);
-        localStorage.setItem('address', freBaseData.address);
-        this.setState({
-          firstname: freBaseData.firstname,
-          lastname: freBaseData.lastname,
-          address: freBaseData.address,
-          profile_picture:freBaseData.profile_picture
-        })
+        try{
+          let DataUser = snapshot.val();
+          localStorage.setItem('id', id);
+          localStorage.setItem('firstname', DataUser.firstname);
+          localStorage.setItem('lastname', DataUser.lastname);
+          localStorage.setItem('phone', DataUser.phone);
+          localStorage.setItem('email', DataUser.email);
+          localStorage.setItem('address', DataUser.address);
+          localStorage.setItem('province', DataUser.province);
+          localStorage.setItem('amphoe', DataUser.amphoe);
+          localStorage.setItem('district', DataUser.district);
+          localStorage.setItem('zipcode', DataUser.zipcode);
+          console.log(DataUser.profile_picture)
+          if (DataUser.profile_picture !== undefined) {
+            this.setState({
+              profile_picture:DataUser.profile_picture
+            })
+          }
+          this.setState({
+            firstname: DataUser.firstname,
+            lastname: DataUser.lastname,
+            address: DataUser.address,
+            province: DataUser.province,
+            amphoe: DataUser.amphoe,
+            district: DataUser.district,
+            zipcode: DataUser.zipcode
+          })
+        }catch(err) {
+          console.log(err)
+          localStorage.setItem('id', null);
+          localStorage.setItem('firstname', '');
+          localStorage.setItem('lastname', '');
+          localStorage.setItem('phone', '');
+          localStorage.setItem('email', '');
+          localStorage.setItem('address', '');
+          localStorage.setItem('province', '');
+          localStorage.setItem('amphoe', '');
+          localStorage.setItem('district', '');
+          localStorage.setItem('zipcode', '');
+          this.props.history.push('/shop')
+        }
       });
 
       const dataCart = firebase.database().ref('cartweb/'+id);
@@ -324,7 +363,7 @@ export default class ShopUser extends React.Component {
         return (
             <div>
                 <Container className="fixed-top">
-                    <Navbar color="light" light expand="md" className="nav-bar-border">
+                    <Navbar expand="md" className="nav-bar-border" style={{backgroundColor: '#008577'}}>
                     <NavbarBrand><Button onClick={this.goBack} className="button-cart"> <img width={25} height={25} src={img_arrow}/></Button></NavbarBrand>
                             {/* <NavbarToggler onClick="" /> */}
                             {/* <Collapse isOpen="" navbar> */}
@@ -378,15 +417,15 @@ export default class ShopUser extends React.Component {
                               <a href="https://www.instagram.com/tankps/">
                                 <img src={img_logout} className="menu-width" alt="logo" />
                               </a>
-                              <a href="https://twitter.com/slammonder">
+                              <a onClick={this.logout}>
                                 <img src={img_logout} className="menu-width" alt="logo" />
                               </a>
                             </div>
                             <Card>
                               <CardBody>
                                 {this.state.firstname} {this.state.lastname}<br/>
-                                ที่อยู่
-                                {this.state.address}
+                                ที่อยู่ <br/>
+                                {this.state.address} {this.state.province} {this.state.amphoe} {this.state.district} {this.state.zipcode}
                               </CardBody>
                             </Card>
                         </Container>
