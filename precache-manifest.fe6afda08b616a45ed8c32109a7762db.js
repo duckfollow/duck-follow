@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e0185bd8f5e6a14982d923be9d1a7e1c",
+    "revision": "c5b6beda86731f48b35118d27b6f56e3",
     "url": "/duck-follow/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/duck-follow/static/css/2.892ff830.chunk.css"
   },
   {
-    "revision": "7b7dddba9d775cbbf2dd",
-    "url": "/duck-follow/static/css/main.b0649bb2.chunk.css"
+    "revision": "8c52f1e138cd1ae305df",
+    "url": "/duck-follow/static/css/main.06b0bee9.chunk.css"
   },
   {
     "revision": "681df728186345c9ef27",
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/duck-follow/static/js/2.2a302424.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7b7dddba9d775cbbf2dd",
-    "url": "/duck-follow/static/js/main.b0b6cc6e.chunk.js"
+    "revision": "8c52f1e138cd1ae305df",
+    "url": "/duck-follow/static/js/main.c9112282.chunk.js"
   },
   {
     "revision": "8d5dffd45c4c32a49c32",
@@ -44,16 +44,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/duck-follow/static/media/ar-camera.8621c6ad.svg"
   },
   {
-    "revision": "939edac73a19459a8a298fd2f1c58cee",
-    "url": "/duck-follow/static/media/arrow.939edac7.svg"
+    "revision": "31fe86fd2bc8ddc1110fd64d25100627",
+    "url": "/duck-follow/static/media/arrow.31fe86fd.svg"
   },
   {
     "revision": "b060f483c77967104302c69ad01fde5d",
     "url": "/duck-follow/static/media/banner.b060f483.png"
   },
   {
-    "revision": "3f767013bbd08c55ac716dfa51318232",
-    "url": "/duck-follow/static/media/basket.3f767013.svg"
+    "revision": "95cf6cabd3be7f6cb6c52ee1e82ff89f",
+    "url": "/duck-follow/static/media/basket.95cf6cab.svg"
   },
   {
     "revision": "650cdc57dc0be3a71cc230a760215df5",
@@ -156,7 +156,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/duck-follow/static/media/user.1a773ead.png"
   },
   {
-    "revision": "1c7e13aeab0f987fc7e183506351aabf",
-    "url": "/duck-follow/static/media/user.1c7e13ae.svg"
+    "revision": "b908b2cbba0c9e4e1cd299930d9731e7",
+    "url": "/duck-follow/static/media/user.b908b2cb.svg"
   }
 ]);
