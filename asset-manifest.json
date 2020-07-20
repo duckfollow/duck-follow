@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/duck-follow/static/css/main.d6d92eec.chunk.css",
-    "main.js": "/duck-follow/static/js/main.bdbdb0cd.chunk.js",
-    "main.js.map": "/duck-follow/static/js/main.bdbdb0cd.chunk.js.map",
+    "main.css": "/duck-follow/static/css/main.5a50d693.chunk.css",
+    "main.js": "/duck-follow/static/js/main.82db144d.chunk.js",
+    "main.js.map": "/duck-follow/static/js/main.82db144d.chunk.js.map",
     "runtime-main.js": "/duck-follow/static/js/runtime-main.10a00341.js",
     "runtime-main.js.map": "/duck-follow/static/js/runtime-main.10a00341.js.map",
     "static/css/2.892ff830.chunk.css": "/duck-follow/static/css/2.892ff830.chunk.css",
-    "static/js/2.3aaf8e8d.chunk.js": "/duck-follow/static/js/2.3aaf8e8d.chunk.js",
-    "static/js/2.3aaf8e8d.chunk.js.map": "/duck-follow/static/js/2.3aaf8e8d.chunk.js.map",
+    "static/js/2.2cea9c42.chunk.js": "/duck-follow/static/js/2.2cea9c42.chunk.js",
+    "static/js/2.2cea9c42.chunk.js.map": "/duck-follow/static/js/2.2cea9c42.chunk.js.map",
     "index.html": "/duck-follow/index.html",
-    "precache-manifest.9f6035faa23d4f79ecda23f72f6b1e82.js": "/duck-follow/precache-manifest.9f6035faa23d4f79ecda23f72f6b1e82.js",
+    "precache-manifest.da9d7924bba7cf49a555d882aa8d9065.js": "/duck-follow/precache-manifest.da9d7924bba7cf49a555d882aa8d9065.js",
     "service-worker.js": "/duck-follow/service-worker.js",
     "static/css/2.892ff830.chunk.css.map": "/duck-follow/static/css/2.892ff830.chunk.css.map",
-    "static/css/main.d6d92eec.chunk.css.map": "/duck-follow/static/css/main.d6d92eec.chunk.css.map",
-    "static/js/2.3aaf8e8d.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.3aaf8e8d.chunk.js.LICENSE.txt",
+    "static/css/main.5a50d693.chunk.css.map": "/duck-follow/static/css/main.5a50d693.chunk.css.map",
+    "static/js/2.2cea9c42.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.2cea9c42.chunk.js.LICENSE.txt",
     "static/media/318x180.svg": "/duck-follow/static/media/318x180.d5ff1945.svg",
     "static/media/KU_Logo.png": "/duck-follow/static/media/KU_Logo.cc35a46b.png",
     "static/media/android_logo.svg": "/duck-follow/static/media/android_logo.ac3421ce.svg",
@@ -58,8 +58,8 @@
   "entrypoints": [
     "static/js/runtime-main.10a00341.js",
     "static/css/2.892ff830.chunk.css",
-    "static/js/2.3aaf8e8d.chunk.js",
-    "static/css/main.d6d92eec.chunk.css",
-    "static/js/main.bdbdb0cd.chunk.js"
+    "static/js/2.2cea9c42.chunk.js",
+    "static/css/main.5a50d693.chunk.css",
+    "static/js/main.82db144d.chunk.js"
   ]
 }
