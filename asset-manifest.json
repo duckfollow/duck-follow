@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/duck-follow/static/css/main.bbeab184.chunk.css",
-    "main.js": "/duck-follow/static/js/main.6e461283.chunk.js",
-    "main.js.map": "/duck-follow/static/js/main.6e461283.chunk.js.map",
+    "main.css": "/duck-follow/static/css/main.c01197ac.chunk.css",
+    "main.js": "/duck-follow/static/js/main.3f9b5298.chunk.js",
+    "main.js.map": "/duck-follow/static/js/main.3f9b5298.chunk.js.map",
     "runtime-main.js": "/duck-follow/static/js/runtime-main.10a00341.js",
     "runtime-main.js.map": "/duck-follow/static/js/runtime-main.10a00341.js.map",
     "static/css/2.892ff830.chunk.css": "/duck-follow/static/css/2.892ff830.chunk.css",
-    "static/js/2.a8bcb11a.chunk.js": "/duck-follow/static/js/2.a8bcb11a.chunk.js",
-    "static/js/2.a8bcb11a.chunk.js.map": "/duck-follow/static/js/2.a8bcb11a.chunk.js.map",
+    "static/js/2.b58ef19c.chunk.js": "/duck-follow/static/js/2.b58ef19c.chunk.js",
+    "static/js/2.b58ef19c.chunk.js.map": "/duck-follow/static/js/2.b58ef19c.chunk.js.map",
     "index.html": "/duck-follow/index.html",
-    "precache-manifest.a338a9f07feeea50f89560cfa2623781.js": "/duck-follow/precache-manifest.a338a9f07feeea50f89560cfa2623781.js",
+    "precache-manifest.daa02e1374c8d30f830700a52981ea59.js": "/duck-follow/precache-manifest.daa02e1374c8d30f830700a52981ea59.js",
     "service-worker.js": "/duck-follow/service-worker.js",
     "static/css/2.892ff830.chunk.css.map": "/duck-follow/static/css/2.892ff830.chunk.css.map",
-    "static/css/main.bbeab184.chunk.css.map": "/duck-follow/static/css/main.bbeab184.chunk.css.map",
-    "static/js/2.a8bcb11a.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.a8bcb11a.chunk.js.LICENSE.txt",
+    "static/css/main.c01197ac.chunk.css.map": "/duck-follow/static/css/main.c01197ac.chunk.css.map",
+    "static/js/2.b58ef19c.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.b58ef19c.chunk.js.LICENSE.txt",
     "static/media/318x180.svg": "/duck-follow/static/media/318x180.d5ff1945.svg",
     "static/media/KU_Logo.png": "/duck-follow/static/media/KU_Logo.cc35a46b.png",
     "static/media/android_logo.svg": "/duck-follow/static/media/android_logo.ac3421ce.svg",
@@ -22,6 +22,7 @@
     "static/media/banner.png": "/duck-follow/static/media/banner.b060f483.png",
     "static/media/basket.svg": "/duck-follow/static/media/basket.95cf6cab.svg",
     "static/media/bin.svg": "/duck-follow/static/media/bin.650cdc57.svg",
+    "static/media/bookbank.png": "/duck-follow/static/media/bookbank.7e808a2e.png",
     "static/media/confused.svg": "/duck-follow/static/media/confused.4d39e029.svg",
     "static/media/duck.svg": "/duck-follow/static/media/duck.7cb5d820.svg",
     "static/media/error.svg": "/duck-follow/static/media/error.6d1bac02.svg",
@@ -34,6 +35,9 @@
     "static/media/icon-line.svg": "/duck-follow/static/media/icon-line.8671a037.svg",
     "static/media/icon-twitter.svg": "/duck-follow/static/media/icon-twitter.3aacac46.svg",
     "static/media/icon-youtube.svg": "/duck-follow/static/media/icon-youtube.bfaefeab.svg",
+    "static/media/idcarddesign.png": "/duck-follow/static/media/idcarddesign.a27eb9ba.png",
+    "static/media/idcarddesignback.png": "/duck-follow/static/media/idcarddesignback.b3b38021.png",
+    "static/media/idcarddesignuser.png": "/duck-follow/static/media/idcarddesignuser.0fcfac55.png",
     "static/media/imgp1.png": "/duck-follow/static/media/imgp1.a0a00b73.png",
     "static/media/imgp2.png": "/duck-follow/static/media/imgp2.16106fbd.png",
     "static/media/imgp3.png": "/duck-follow/static/media/imgp3.679f72f8.png",
@@ -64,8 +68,8 @@
   "entrypoints": [
     "static/js/runtime-main.10a00341.js",
     "static/css/2.892ff830.chunk.css",
-    "static/js/2.a8bcb11a.chunk.js",
-    "static/css/main.bbeab184.chunk.css",
-    "static/js/main.6e461283.chunk.js"
+    "static/js/2.b58ef19c.chunk.js",
+    "static/css/main.c01197ac.chunk.css",
+    "static/js/main.3f9b5298.chunk.js"
   ]
 }
