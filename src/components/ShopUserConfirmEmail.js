@@ -11,10 +11,9 @@ import {
 import * as firebase from 'firebase';
 import { QRCode } from 'react-qrcode-logo';
 import './ShopUserRegisterSuccess.css';
-import axios from 'axios';
 // https://duckfollowtk.github.io/duck-follow/#/shop-regiter-success/-M9lbiIbt8wqU7hSx4GS
 
-export default class ShopUserRegisterSuccess extends React.Component {
+export default class ShopUserConfirmEmail extends React.Component {
 
     constructor(props) {
         super(props);
@@ -31,6 +30,7 @@ export default class ShopUserRegisterSuccess extends React.Component {
         };
 
         this.ok = this.ok.bind(this);
+        
     }
 
     componentDidMount(){
@@ -77,19 +77,6 @@ export default class ShopUserRegisterSuccess extends React.Component {
 
       ok() {
           this.props.history.push('/shop')
-      }
-
-      sendNotification(data) {
-        console.log(data)
-        axios.post("https://api-duckfollow.herokuapp.com/line/send",data,{
-        })
-        .then(response => {
-              console.log("response: ", response)
-              // do something about response
-        })
-        .catch(err => {
-              console.error(err)
-        })
       }
 
     render() {

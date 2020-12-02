@@ -24,6 +24,7 @@ import {
 import { Masonry } from './Masonry';
 import { Link } from "react-router-dom";
 import './Shop.css';
+import './ShopUser.css';
 import img_cart from '../assets/img/basket.svg'
 import img_arrow from '../assets/img/arrow.svg'
 import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
@@ -44,12 +45,14 @@ import unhappy from '../assets/img/unhappy.svg'
 import img_fab from '../assets/img/fab-shop.svg'
 
 import * as firebase from 'firebase';
+import textData from '../api/TextData.json';
 
 export default class ShopUser extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            user_id:'',
             dataOrder: [],
             dataDelivery: [],
             dataCancel: [],
@@ -59,6 +62,8 @@ export default class ShopUser extends React.Component {
             file: [],
             firstname: '',
             lastname: '',
+            phone: '',
+            email: '',
             address:'',
             province: '',
             amphoe: '',
@@ -67,10 +72,14 @@ export default class ShopUser extends React.Component {
             profile_picture: profile,
             isUpload:false,
             isReview: false,
-            idOrder: ""
+            idOrder: "",
+            isShowAlert: false,
+            textAlert: "",
+            idOrderCancel:""
         };
         this.goBack = this.goBack.bind(this);
         this.logout = this.logout.bind(this);
+        localStorage.setItem('page', 'user');
     }
 
     goBack(){
@@ -112,14 +121,19 @@ export default class ShopUser extends React.Component {
             })
           }
           this.setState({
+            user_id: snapshot.key,
             firstname: DataUser.firstname,
             lastname: DataUser.lastname,
+            phone: DataUser.phone,
+            email: DataUser.email,
             address: DataUser.address,
             province: DataUser.province,
             amphoe: DataUser.amphoe,
             district: DataUser.district,
             zipcode: DataUser.zipcode
           })
+
+          document.title = "profile - "+DataUser.firstname + " " +DataUser.lastname
         }catch(err) {
           console.log(err)
           localStorage.setItem('id', null);
@@ -164,37 +178,49 @@ export default class ShopUser extends React.Component {
         var dataListDelivary = []
         var dataListCancel = []
         var dataListSuccess = []
+        
         snapshot.forEach(productSnapshot => {
           let data = productSnapshot.val();
-          console.log(data)
+          let date_data = new Date(data.date_order)
+          let date_order = date_data.toLocaleString('th-TH') +" น."
           if (data.status == 0) {
             dataListOrder.push({
               img: data.product[0].picture,
               product: data.product,
               key:productSnapshot.key,
-              date_order: data.date_order,
+              date_order: date_order,
               price:data.price,
+              delivery_code: data.delivery_code,
               status:data.status
             })
           } else if (data.status == 1) {
             dataListDelivary.push({
+              img: data.product[0].picture,
+              product: data.product,
               key:productSnapshot.key,
-              date_order: data.date_order,
+              date_order: date_order,
               price:data.price,
+              delivery_code: data.delivery_code,
               status:data.status
             })
           } else if (data.status == 2) {
             dataListSuccess.push({
+              img: data.product[0].picture,
+              product: data.product,
               key:productSnapshot.key,
-              date_order: data.date_order,
+              date_order: date_order,
               price:data.price,
+              delivery_code: data.delivery_code,
               status:data.status
             })
           } else if (data.status == 3) {
             dataListCancel.push({
+              img: data.product[0].picture,
+              product: data.product,
               key:productSnapshot.key,
-              date_order: data.date_order,
+              date_order: date_order,
               price:data.price,
+              delivery_code: data.delivery_code,
               status:data.status
             })
           }
@@ -235,21 +261,33 @@ export default class ShopUser extends React.Component {
       this.props.history.push('/invoice/'+key_value)
     }
 
-    handleCancelOrder(event) {
-      console.log(event)
+    handleCancelOrder() {
+      // console.log(event)
       const dataRef = firebase.database()
-      const key_value = event
+      const key_value = this.state.idOrderCancel
       var today = (new Date()).toISOString()
       var id = localStorage.getItem('id');
+      var context = this
       dataRef.ref("orderweb/"+id+"/"+key_value).update({
         status: 3,
         date_cancel: today
         }).then(function () {
           console.log("success")
           alert("cancel success")
+          var data = {
+            date: today,
+            text: textData.cancel_order,
+            detail: ""
+          }
+          dataRef.ref("orderweb/"+id+"/"+key_value+"/statusDetails").push(data)
+          context.setState({isShowAlert:false,idOrderCancel:""})
           }, function () {
           console.log('rejected promise')
       }).catch((e) => console.log(e))
+    }
+
+    alertCancel(ev) {
+      this.setState({isShowAlert:true,idOrderCancel:ev})
     }
 
     handleSuccessOrder(event) {
@@ -265,6 +303,12 @@ export default class ShopUser extends React.Component {
         date_success: today
         }).then(function () {
           console.log("success")
+          var data = {
+            date: today,
+            text: textData.order_succuss,
+            detail: ""
+          }
+          dataRef.ref("orderweb/"+id+"/"+key_value+"/statusDetails").push(data)
           context.setState({
             isReview: true
           })
@@ -298,17 +342,21 @@ export default class ShopUser extends React.Component {
     }
 
     handleChange(event) {
-      let reader = new FileReader();
-      const files = event.target.files[0];
-      //this.setState({file:files});
-      reader.onloadend = () => {
-        this.setState({
-          file: files,
-          profile_picture: reader.result,
-          isUpload:true
-        });
+      try {
+        let reader = new FileReader();
+        const files = event.target.files[0];
+        //this.setState({file:files});
+        reader.onloadend = () => {
+          this.setState({
+            file: files,
+            profile_picture: reader.result,
+            isUpload:true
+          });
+        }
+        reader.readAsDataURL(files)
+      }catch(e) {
+        
       }
-      reader.readAsDataURL(files)
   }
 
   uploadToFirebase(event) {
@@ -358,6 +406,10 @@ export default class ShopUser extends React.Component {
     event.preventDefault();
 }
 
+onHide() {
+  this.setState({isShowAlert:false,idOrderCancel:""})
+}
+
 
     render() {
         return (
@@ -371,7 +423,12 @@ export default class ShopUser extends React.Component {
                             
                             </Nav>
                             <NavbarText> 
-                            <Link to={`/shop-cart`} className="button-cart"> <img width={25} height={25} src={img_cart}/> <Badge color="danger">{this.state.dataCart.length}</Badge></Link>
+                            <Link to={`/shop-cart`} className="button-cart"> <img width={25} height={25} src={img_cart}/> <Badge color="danger">{this.state.dataCart.length}</Badge></Link> {' '}
+                            <Button size="sm" outline onClick={this.logout}>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z"/>
+                              <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z"/>
+                            </svg> ออกจากระบบ</Button>
                             </NavbarText>
                             {/* </Collapse> */}
                     </Navbar>
@@ -380,13 +437,13 @@ export default class ShopUser extends React.Component {
                     <br/>
                     <br/>
                     <br/>
-                    <Container>
+                    <Container fluid={true}>
                     <Row>
                       <Col md="4">
                         <br/>
                         <div>
                           <center>
-                            <div class="profile-userpic">
+                            <div className="profile-userpic">
                                 <img className="img" src={this.state.profile_picture} alt=""/>
                                 <div className="img-camera">
                                   <img className="img-responsive" width={10} height={10} src={img_camera}/>
@@ -407,7 +464,13 @@ export default class ShopUser extends React.Component {
                             <Col xs={4}><img className="img-menu" onClick={this.logout} src={img_logout}/></Col>
                             <Col xs={4}><img className="img-menu" onClick={this.logout} src={img_logout}/></Col>
                           </Row> */}
-                            <div className="view-menu">
+                          <center>
+                            <b>{this.state.firstname} {this.state.lastname}</b><br/>
+                            รหัสประจำตัวผู้ใช้งาน (User ID) <br/>
+                            {this.state.user_id}
+                          </center>
+                           
+                            {/* <div className="view-menu">
                               <a href="https://github.com/DuckFollowTK">
                                 <img src={img_qr_code} className="menu-width" alt="logo" />
                               </a>
@@ -420,24 +483,27 @@ export default class ShopUser extends React.Component {
                               <a onClick={this.logout}>
                                 <img src={img_logout} className="menu-width" alt="logo" />
                               </a>
-                            </div>
+                            </div> */}
+                            <br/>
                             <Card>
                               <CardBody>
-                                {this.state.firstname} {this.state.lastname}<br/>
-                                ที่อยู่ <br/>
+                                
+                                <b>ที่อยู่</b><br/>
+                                {this.state.phone}<br/>
+                                {this.state.email}<br/>
                                 {this.state.address} {this.state.province} {this.state.amphoe} {this.state.district} {this.state.zipcode}
                               </CardBody>
-                            </Card>
+                            </Card>                            
                         </Container>
                       </Col>
                       <Col md="8">
                         <br/>
                         <Container className="page__tabs-container">
                           <Row>
-                            <Col xs={6} md={3}><Button className={classnames({'btn-tabs':true,'btn-tabs-active': this.state.activeTab === '1' })} onClick={this.toggle.bind(this,'1')}>order {this.state.dataOrder.length >0? <Badge color="danger">{this.state.dataOrder.length}</Badge> :null}</Button></Col>
-                            <Col xs={6} md={3}><Button className={classnames({'btn-tabs':true,'btn-tabs-active': this.state.activeTab === '2' })} onClick={this.toggle.bind(this,'2')}>delivary {this.state.dataDelivery.length >0? <Badge color="danger">{this.state.dataDelivery.length}</Badge> :null}</Button></Col>
-                            <Col xs={6} md={3}><Button className={classnames({'btn-tabs':true,'btn-tabs-active': this.state.activeTab === '3' })} onClick={this.toggle.bind(this,'3')}>success {this.state.dataSuccess.length >0? <Badge color="danger">{this.state.dataSuccess.length}</Badge> :null}</Button></Col>
-                            <Col xs={6} md={3}><Button className={classnames({'btn-tabs':true,'btn-tabs-active': this.state.activeTab === '4' })} onClick={this.toggle.bind(this,'4')}>cancel {this.state.dataCancel.length >0? <Badge color="danger">{this.state.dataCancel.length}</Badge> :null}</Button></Col>
+                            <Col xs={6} md={3}><Button className={classnames({'btn-tabs':true,'btn-tabs-active': this.state.activeTab === '1' })} onClick={this.toggle.bind(this,'1')}>รอชำระเงิน {this.state.dataOrder.length >0? <Badge color="danger">{this.state.dataOrder.length}</Badge> :null}</Button></Col>
+                            <Col xs={6} md={3}><Button className={classnames({'btn-tabs':true,'btn-tabs-active': this.state.activeTab === '2' })} onClick={this.toggle.bind(this,'2')}>รอจัดส่ง {this.state.dataDelivery.length >0? <Badge color="danger">{this.state.dataDelivery.length}</Badge> :null}</Button></Col>
+                            <Col xs={6} md={3}><Button className={classnames({'btn-tabs':true,'btn-tabs-active': this.state.activeTab === '3' })} onClick={this.toggle.bind(this,'3')}>รับสินค้าแล้ว {this.state.dataSuccess.length >0? <Badge color="danger">{this.state.dataSuccess.length}</Badge> :null}</Button></Col>
+                            <Col xs={6} md={3}><Button className={classnames({'btn-tabs':true,'btn-tabs-active': this.state.activeTab === '4' })} onClick={this.toggle.bind(this,'4')}>ยกเลิก {this.state.dataCancel.length >0? <Badge color="danger">{this.state.dataCancel.length}</Badge> :null}</Button></Col>
                           </Row>
                         </Container>
                       <TabContent activeTab={this.state.activeTab}>
@@ -449,14 +515,14 @@ export default class ShopUser extends React.Component {
                               <Card className="card-view-cart" key={item.key}>
                                   <CardBody>
                                     <Row>
-                                      <Col xs={2}><img src={item.img} className="img-order"/></Col>
+                                      <Col xs={2}><img width="100%" src={item.img} className="img-order"/></Col>
                                       <Col xs={10}>
-                                      {item.key}<br/>
-                                      {item.date_order}<br/>
+                                      เลขที่ใบเสร็จ {item.key}<br/>
+                                      วันที่สั่งสินค้า {item.date_order}<br/>
                                       <Row>
                                         {
-                                          item.product.map(p =>(
-                                          <Col xs={12}>{p.name_product}</Col>
+                                          item.product.map((p,i) =>(
+                                          <Col xs={12}><p className="name-product-list">{(i+1)}. {p.name_product}</p></Col>
                                           ))
                                         }
                                       </Row>
@@ -465,8 +531,8 @@ export default class ShopUser extends React.Component {
                                     </Row>
                                     <hr/>
                                     <p className="text-order-price">ราคา ฿{item.price}</p>
-                                    <Button outline color="info" size="lg" value={item.key} onClick={this.handleViewOrder.bind(this,item.key)}>รายละเอียด</Button> {' '}
-                                    <Button outline color="danger" size="lg" value={item.key} onClick={this.handleCancelOrder.bind(this,item.key)}>cancel</Button>
+                                    <Button outline color="info" size="sm" value={item.key} onClick={this.handleViewOrder.bind(this,item.key)}>รายละเอียด</Button> {' '}
+                                    <Button outline color="danger" size="sm" value={item.key} onClick={this.alertCancel.bind(this,item.key)}>ยกเลิกคำสั่งซื้อ</Button>
                                   </CardBody>
                               </Card>
                             ))}
@@ -476,16 +542,32 @@ export default class ShopUser extends React.Component {
                         <TabPane tabId="2">
                           <br/>
                           {this.state.dataDelivery.map(item => (
-                              <Card className="card-view-cart" key={item.key}>
-                                  <CardBody>
-                                    {item.key}<br/>
-                                    {item.date_order}<br/>
-                                    ราคา {item.price}
-                                    <Button outline color="info" size="sm" value={item.key} onClick={this.handleViewOrder.bind(this,item.key)}>view</Button>
-                                    <Button outline color="success" size="sm" value={item.key} onClick={this.handleSuccessOrder.bind(this,item.key)}>success</Button>
-                                  </CardBody>
-                              </Card>
-                            ))}
+                             <Card className="card-view-cart" key={item.key}>
+                             <CardBody>
+                               <Row>
+                                 <Col xs={2}><img width="100%" src={item.img} className="img-order"/></Col>
+                                 <Col xs={10}>
+                                 เลขที่ใบเสร็จ {item.key}<br/>
+                                 วันที่สั่งสินค้า {item.date_order}<br/>
+                                 <Row>
+                                   {
+                                     item.product.map((p,i) =>(
+                                     <Col xs={12}><p className="name-product-list">{(i+1)}. {p.name_product}</p></Col>
+                                     ))
+                                   }
+                                 </Row>
+                                 จำนวน {item.product.length} ชิ้น <br/>
+                                 <b>หมายเลขติดตามสินค้า</b><br/>
+                                 {item.delivery_code}
+                                 </Col>
+                               </Row>
+                               <hr/>
+                               <p className="text-order-price">ราคา ฿{item.price}</p>
+                               <Button outline color="info" size="sm" value={item.key} onClick={this.handleViewOrder.bind(this,item.key)}>รายละเอียด</Button>{' '}
+                               <Button outline color="success" size="sm" value={item.key} onClick={this.handleSuccessOrder.bind(this,item.key)}>รับสินค้า</Button>
+                             </CardBody>
+                         </Card>
+                          ))}
                         </TabPane>
                         <TabPane tabId="3">
                           <Row>
@@ -493,14 +575,28 @@ export default class ShopUser extends React.Component {
                               <br/>
                             {this.state.dataSuccess.map(item => (
                               <Card className="card-view-cart" key={item.key}>
-                                  <CardBody>
-                                    {item.key}<br/>
-                                    {item.date_order}<br/>
-                                    ราคา {item.price}
-                                    <Button outline color="info" size="sm" value={item.key} onClick={this.handleViewOrder.bind(this,item.key)}>view</Button>
-                                  </CardBody>
-                              </Card>
-                            ))}
+                              <CardBody>
+                                <Row>
+                                  <Col xs={2}><img width="100%" src={item.img} className="img-order"/></Col>
+                                  <Col xs={10}>
+                                  เลขที่ใบเสร็จ {item.key}<br/>
+                                  วันที่สั่งสินค้า {item.date_order}<br/>
+                                  <Row>
+                                    {
+                                      item.product.map((p,i) =>(
+                                      <Col xs={12}><p className="name-product-list">{(i+1)}. {p.name_product}</p></Col>
+                                      ))
+                                    }
+                                  </Row>
+                                  จำนวน {item.product.length} ชิ้น
+                                  </Col>
+                                </Row>
+                                <hr/>
+                                <p className="text-order-price">ราคา ฿{item.price}</p>
+                                <Button outline color="info" size="sm" value={item.key} onClick={this.handleViewOrder.bind(this,item.key)}>รายละเอียด</Button>
+                              </CardBody>
+                          </Card>
+                        ))}
                             </Col>
                           </Row>
                         </TabPane>
@@ -508,16 +604,30 @@ export default class ShopUser extends React.Component {
                           <Row>
                             <Col sm="12">
                               <br/>
-                            {this.state.dataCancel.map(item => (
-                              <Card className="card-view-cart" key={item.key}>
-                                  <CardBody>
-                                    {item.key}<br/>
-                                    {item.date_order}<br/>
-                                    ราคา {item.price}
-                                    <Button outline color="info" size="sm" value={item.key} onClick={this.handleViewOrder.bind(this,item.key)}>view</Button>
-                                  </CardBody>
-                              </Card>
-                            ))}
+                              {this.state.dataCancel.map(item => (
+                                <Card className="card-view-cart" key={item.key}>
+                                <CardBody>
+                                  <Row>
+                                    <Col xs={2}><img width="100%" src={item.img} className="img-order"/></Col>
+                                    <Col xs={10}>
+                                    เลขที่ใบเสร็จ {item.key}<br/>
+                                    วันที่สั่งสินค้า {item.date_order}<br/>
+                                    <Row>
+                                      {
+                                        item.product.map((p,i) =>(
+                                        <Col xs={12}><p className="name-product-list">{(i+1)}. {p.name_product}</p></Col>
+                                        ))
+                                      }
+                                    </Row>
+                                    จำนวน {item.product.length} ชิ้น
+                                    </Col>
+                                  </Row>
+                                  <hr/>
+                                  <p className="text-order-price">ราคา ฿{item.price}</p>
+                                  <Button outline color="info" size="sm" value={item.key} onClick={this.handleViewOrder.bind(this,item.key)}>รายละเอียด</Button>
+                                </CardBody>
+                                </Card>
+                              ))}
                             </Col>
                           </Row>
                         </TabPane>
@@ -543,9 +653,21 @@ export default class ShopUser extends React.Component {
                         <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
                         <Button color="secondary" onClick={toggle}>Cancel</Button>
                       </ModalFooter> */}
-                    </Modal>       
-            </div>
+                    </Modal>
 
+                    <Modal id="user-alert" isOpen={this.state.isShowAlert} toggle={this.onHide.bind(this)} fade={false} centered>
+                      <ModalBody>
+                        <center>
+                          <h3 className="txt-header-sub">ยกเลิกคำสั่งซื้อ</h3>
+                          <p>คุณต้องการยกเลิกรายการ {this.state.idOrderCancel} ใช่หรือไม่?</p>
+                          <ModalFooter>
+                            <Button outline color="success" onClick={this.handleCancelOrder.bind(this)}>ตกลง</Button>
+                            <Button outline color="danger" onClick={this.onHide.bind(this)}>ปิด</Button>
+                          </ModalFooter>
+                        </center>
+                      </ModalBody>
+                    </Modal>     
+            </div>
         )
     }
 }

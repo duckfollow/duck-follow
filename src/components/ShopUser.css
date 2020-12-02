@@ -1,0 +1,16 @@
+.name-product-list {
+    margin-bottom: 0 !important;
+    color:rgba(0,0,0,0.5);
+    font-size:12px;
+}
+
+.content-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.btn-ok-login {
+    height: 100% !important;
+    width: 100% !important;
+}

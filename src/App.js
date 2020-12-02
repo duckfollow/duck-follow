@@ -5,6 +5,7 @@ import Policy from './components/Policy'
 import Game from './components/Game'
 import lamp from './components/lamp'
 import shop from './components/Shop'
+import shoperror from './components/ShopError'
 import shopcart from './components/ShopCart'
 import shopinvoice from './components/ShopInvoice'
 import ShopUserLogin from './components/ShopUserLogin'
@@ -14,6 +15,8 @@ import Dashboard from './components/Dashboard'
 import ProductsAdd from './components/ProductsAdd'
 import ProductsView from './components/ProductsView'
 import ProductViewDetails from './components/ProductViewDetails'
+import ShopStoreRegister from './components/ShopStoreRegister'
+import ShopStoreDashboard from './components/ShopStoreDashboard'
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 function App() {
@@ -35,6 +38,11 @@ function App() {
         <Route path="/product-add" component={ProductsAdd} />
         <Route path="/product-view/:key" component={ProductsView} />
         <Route path="/view/:key" component={ProductViewDetails} />
+        <Route path="/shop-error" component={shoperror} />
+
+        {/* Shop user admin */}
+        <Route path="/shop-store-register" component={ShopStoreRegister} />
+        <Route path="/shop-dashboard" component={ShopStoreDashboard} />
       </div>
     </HashRouter>
   );

@@ -24,6 +24,7 @@ import { Masonry } from './Masonry';
 import { Link } from "react-router-dom";
 import './Shop.css';
 import './ShopUser.css';
+import './ShopStoreRegister.css';
 import img_cart from '../assets/img/basket.svg'
 import img_arrow from '../assets/img/arrow.svg'
 import img_err from '../assets/img/error.svg'
@@ -36,6 +37,8 @@ import { Form, FormGroup, Label } from 'reactstrap';
 
 import * as firebase from 'firebase';
 import img_fab from '../assets/img/fab-shop.svg'
+import shop from '../assets/img/shop.png'
+import shop_register from '../assets/img/shop_register.png'
 
 import dataJson from '../api/raw_database.json'
 import ShopFooter from './ShopFooter'
@@ -47,7 +50,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {Button} from 'reactstrap';
 import axios from 'axios';
 
-export default class ShopUserLogin extends React.Component {
+export default class ShopStoreRegister extends React.Component {
 
     constructor(props) {
         super(props);
@@ -107,10 +110,10 @@ export default class ShopUserLogin extends React.Component {
         this.goBack = this.goBack.bind(this);
         this.login = this.login.bind(this);
         this.register = this.register.bind(this);
-        var id = localStorage.getItem('id');
+        var id = localStorage.getItem('store_id');
         console.log(id)
         if (id !== null && id !== 'null')  {
-          this.props.history.push('/profile');
+          this.props.history.push('/shop-dashboard');
         }
         this.onChangeFirstName = this.onChangeFirstName.bind(this);
         this.onChangeLastName = this.onChangeLastName.bind(this);
@@ -126,50 +129,29 @@ export default class ShopUserLogin extends React.Component {
       document.title = "duck shop - ร้านค้าออนไลน์"
       let favicon = document.getElementById("favicon");
       favicon.href = img_fab;
-
-        const dataCart = firebase.database().ref('cartweb/id');
-    
-        dataCart.on('value', (snapshot) => {
-          let freBaseData = snapshot.val();
-          let dataStorageCart = [];    
-          snapshot.forEach(productSnapshot => {
-            let data = productSnapshot.val();
-            dataStorageCart.push({
-              keyid:productSnapshot.key,
-              name_product:data.name_product,
-              details_product:data.details_product,
-              price_product:data.price_product,
-              profile_picture:data.profile_picture,
-              });
-        });
-
-          this.setState({
-            dataCart: dataStorageCart
-          });
-        }); 
-      }
+    }
 
       login () {
         this.setState({speed:2.5})
         console.log(this.state.idUser)
         this.setState({isLogining: true})
         if (this.state.idUser !== 'undefined' && this.state.idUser !== undefined && this.state.idUser !== '') {
-          const dataUser = firebase.database().ref('userweb/'+this.state.idUser);
+          const dataUser = firebase.database().ref('userwebstore/'+this.state.idUser);
           dataUser.on('value', (snapshot) => {
             try {
-              let DataUser = snapshot.val();
-              console.log(DataUser)
-              if (DataUser !== null) {
-                localStorage.setItem('id', this.state.idUser);
-                localStorage.setItem('firstname', DataUser.firstname);
-                localStorage.setItem('lastname', DataUser.lastname);
-                localStorage.setItem('address', DataUser.address);
+              let DataShop = snapshot.val();
+              console.log(DataShop)
+              if (DataShop !== null) {
+                localStorage.setItem('store_id', this.state.idUser);
+                localStorage.setItem('store_province', DataShop.province);
+                localStorage.setItem('store_amphoe', DataShop.amphoe);
+                localStorage.setItem('store_district', DataShop.district);
                 let dataLine = {
-                  message: "Login by \nid:"+this.state.idUser +"\n"+DataUser.firstname+ " "+DataUser.lastname +"\n"+DataUser.address
+                  message: "shop_id:"+this.state.idUser+"\n Login..."
                 }
                 this.sendNotification(dataLine)
                 setTimeout(function() { //Start the timer
-                  this.props.history.push('/profile')
+                  this.props.history.push('/shop-dashboard')
                   this.setState({speed:1})
                 }.bind(this), 1500) 
               } else {
@@ -191,6 +173,8 @@ export default class ShopUserLogin extends React.Component {
 
       register() {
         if (this.state.firstname !== '' && this.state.lastname !== '' && this.state.address !== '' && this.state.phone !== '' && this.state.email !== '' && this.state.province !== '' && this.state.amphoe !== '' && this.state.district !== '' && this.state.zipcode !== '') {
+          this.setState({speed:2.5})
+          this.setState({isLogining: true})
           const dataRef = firebase.database()
           const context = this
           var data = {
@@ -203,19 +187,30 @@ export default class ShopUserLogin extends React.Component {
             amphoe: this.state.amphoe,
             district: this.state.district,
             zipcode: this.state.zipcode,
+            status_register: 0,
+            status_add_product: 0,
+            message: "",
+            rule: 'store',
             confirm_email: 0
           }
-          var newUser = dataRef.ref("userweb").push(data).then(function (snapshot) {
+          var newUser = dataRef.ref("userwebstore").push(data).then(function (snapshot) {
               console.log("success")
               console.log(snapshot.key)
+              localStorage.setItem('store_id', snapshot.key);
+              localStorage.setItem('store_province', data.province);
+              localStorage.setItem('store_amphoe', data.amphoe);
+              localStorage.setItem('store_district', data.district);
+              context.setState({isLogining: false,speed:1})
               data['key'] = snapshot.key
-              context.saveReportMember(data)
-              context.props.history.push('/shop-regiter-success/'+snapshot.key)
+              context.saveReportShop(data)
+              let dataLine = {
+                message: "shop_id:"+snapshot.key
+              }
+              context.sendNotification(dataLine)
+              context.props.history.push('/shop-dashboard/')
               }, function () {
               console.log('rejected promise')
           }).catch((e) => console.log(e))
-          
-          
         } else {
           this.setState({isShowError:true,textError:"กรุณากรอก ข้อมูลที่ถูกต้อง ใหม่อีกครั้ง"})
         }
@@ -325,16 +320,9 @@ export default class ShopUserLogin extends React.Component {
         this.setState({isShowError:false})
       }
 
-      /**
-       * 
-       * @param {message} data 
-       */
-
-      saveReportMember(data) {
+      saveReportShop(data) {
         console.log(data)
-        // "https://api-duckfollow.herokuapp.com/members/save"
-        // "http://localhost:5000/members/save"
-        axios.post("https://api-duckfollow.herokuapp.com/members/save",data,{
+        axios.post("https://api-duckfollow.herokuapp.com/shop/save",data,{
         })
         .then(response => {
               console.log("response: ", response)
@@ -387,7 +375,7 @@ export default class ShopUserLogin extends React.Component {
                             
                             </Nav>
                             <NavbarText> 
-                            <Link to={`/shop-cart`} className="button-cart"> <img width={25} height={25} src={img_cart}/> <Badge color="danger">{this.state.dataCart.length}</Badge></Link>
+                            
                             </NavbarText>
                             {/* </Collapse> */}
                     </Navbar>               
@@ -398,11 +386,11 @@ export default class ShopUserLogin extends React.Component {
                     <br/>
                 <Container fluid={true}>
                     <Row>
-                        <Col md={1}></Col>
-                        <Col xs={12} md={4} className="content-center">
+                        {/* <Col md={1}></Col> */}
+                        <Col xs={{ size: 12, order: 2}} md={{ size: 6, order: 1}} className="content-center">
                           <h1>
                             Welcome <br/>
-                            Back
+                            Back Shop
                           </h1>
                           <br/>
                           {/* <Lottie options={defaultOptions}
@@ -426,7 +414,7 @@ export default class ShopUserLogin extends React.Component {
                                 <TextField fullWidth id="idUser" label="ใส่รหัสของคุณ (User ID)" variant="outlined" value={this.state.idUser} onChange={this.onChangeIdUser} />
                             </Col>
                             <Col xs={3}>
-                                <Button className="btn-ok-login" size="lg" color="primary" outline onClick={this.login.bind(this)}><svg width="25px" height="25px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right" className="svg-inline--fa fa-arrow-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"></path></svg></Button>
+                                <Button className="btn-ok-login" size="lg" color="primary" outline onClick={this.login.bind(this)}><svg width="25px" height="25px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right" class="svg-inline--fa fa-arrow-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"></path></svg></Button>
                             </Col>
                           </Row>
                           {
@@ -449,6 +437,19 @@ export default class ShopUserLogin extends React.Component {
                           }
                           <p>ลืมรหัส</p>
                         </Col>
+                        {/* <Col md={1}></Col> */}
+                        <Col xs={{ size: 12, order: 1}} md={{ size: 6, order: 2}}>
+                          <img src={shop} className="img-login"/>
+                        </Col>
+                        {/* <Col md={1}></Col> */}
+                    </Row>
+
+                    <Row>
+                        <Col md={1}></Col>
+                        <Col xs={12} md={4} className="content-center">
+                          <img src={shop_register} className="img-login"/>
+                          <p align="center">ลงทะเบียนเป็นร้านค้ากับเราได้แล้ววันนี้ฟรี</p>
+                        </Col>
                         <Col md={1}></Col>
                         <Col xs={12} md={5}>
                         <h1>ลงทะเบียน</h1>
@@ -456,41 +457,25 @@ export default class ShopUserLogin extends React.Component {
                             <Row form>
                               <Col xs={6} md={6}>
                                 <FormGroup>
-                                  {/* <Label for="exampleEmail">ชื่อ</Label> */}
-                                  {/* <Input type="text" id="firstname"  placeholder="" value={this.state.firstname} onChange={this.onChangeFirstName} /> */}
                                   <TextField fullWidth id="firstname" label="ชื่อ" variant="outlined" value={this.state.firstname} onChange={this.onChangeFirstName} />
                                 </FormGroup>
                               </Col>
                               <Col xs={6} md={6}>
                                 <FormGroup>
-                                  {/* <Label for="examplePassword">นามสกุล</Label>
-                                  <Input type="text" id="lastname" placeholder="" value={this.state.lastname} onChange={this.onChangeLastName}/> */}
                                   <TextField fullWidth id="lastname" label="นามสกุล" variant="outlined" value={this.state.lastname} onChange={this.onChangeLastName}/>
                                 </FormGroup>
                               </Col>
                             </Row>
                             <FormGroup>
-                              {/* <Label for="exampleAddress">เบอร์โทรศัพท์</Label>
-                              <Input type="phone" value={this.state.phone} onChange={this.onChangePhone.bind(this)}/> */}
                               <TextField fullWidth id="phone" label="เบอร์โทรศัพท์" variant="outlined" value={this.state.phone} onChange={this.onChangePhone.bind(this)}/>
                             </FormGroup>
                             <FormGroup>
-                              {/* <Label for="exampleAddress">อีเมล</Label>
-                              <Input type="text" id="exampleAddress" placeholder="" value={this.state.email} onChange={this.onChangeEmail.bind(this)}/> */}
                               <TextField fullWidth id="email" label="อีเมล" variant="outlined" value={this.state.email} onChange={this.onChangeEmail.bind(this)}/>
                             </FormGroup>
                             <FormGroup>
-                              {/* <Label for="exampleAddress">ที่อยู่</Label>
-                              <Input type="text" id="exampleAddress" placeholder="" value={this.state.address} onChange={this.onChangeAddress}/> */}
                               <TextField fullWidth multiline id="address" label="ที่อยู่" variant="outlined" value={this.state.address} onChange={this.onChangeAddress}/>
                             </FormGroup>
                             <FormGroup>
-                              {/* <Label for="exampleAddress">จังหวัด</Label>
-                              <Input type="select" name="select" id="exampleSelect" onChange={this.onChangeProvince.bind(this)} value={this.state.province}>
-                                    {this.state.dataProvince.map((item,index) => (
-                                        <option value={this.state.dataProvince[index]}>{this.state.dataProvince[index]}</option>
-                                    ))}
-                              </Input> */}
                               <TextField
                                 id="filled-select-currency"
                                 select
@@ -509,13 +494,6 @@ export default class ShopUserLogin extends React.Component {
                               </TextField>
                             </FormGroup>
                             <FormGroup>
-                                  {/* <Label for="exampleCity">อำเภอ</Label>
-                                  <Input type="select" name="select" id="exampleSelect" onChange={this.onChangeAmphoe.bind(this)} value={this.state.amphoe}>
-                                    {this.state.dataAmphoe.map((item,index) => (
-                                        <option value={this.state.dataAmphoe[index]}>{this.state.dataAmphoe[index]}</option>
-                                    ))}
-                                  </Input> */}
-
                               <TextField
                                 id="filled-select-currency"
                                 select
@@ -536,12 +514,6 @@ export default class ShopUserLogin extends React.Component {
                             <Row form>
                               <Col md={8}>
                                 <FormGroup>
-                                  {/* <Label for="exampleState">ตำบล</Label>
-                                  <Input type="select" name="select" id="exampleSelect" onChange={this.onChangeDistrict.bind(this)} value={this.state.district}>
-                                    {this.state.dataDistrict.map((item,index) => (
-                                        <option value={this.state.dataDistrict[index]}>{this.state.dataDistrict[index]}</option>
-                                    ))}
-                                  </Input> */}
                                   <TextField
                                     id="filled-select-currency"
                                     select
@@ -562,12 +534,6 @@ export default class ShopUserLogin extends React.Component {
                               </Col>
                               <Col md={4}>
                                 <FormGroup>
-                                  {/* <Label for="exampleZip">รหัสไปรษณีย์</Label>
-                                  <Input type="select" name="select" id="exampleSelect" onChange={this.onChangeZipCode.bind(this)} value={this.state.zipcode}>
-                                    {this.state.dataZipcode.map((item,index) => (
-                                        <option value={this.state.dataZipcode[index]}>{this.state.dataZipcode[index]}</option>
-                                    ))}
-                                  </Input> */}
                                   <TextField
                                     id="filled-select-currency"
                                     select

@@ -4,8 +4,19 @@
     right: 5px;
 }
 
+.form-group-address {
+    margin-bottom: 0 !important;
+}
+
+.txt-head-address {
+    font-weight: bold !important;
+    margin-bottom: 0 !important;
+}
+
 .textBox {
     border:none !important;
+    padding: 0 !important;
+    height: auto !important;
     pointer-events:none !important;
     -webkit-touch-callout: none !important;
     -webkit-user-select: none !important;
@@ -13,9 +24,28 @@
     -moz-user-select: none !important;
     -ms-user-select: none !important;
     user-select: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
 }
 
 .btn-back-cart-home {
     cursor: pointer;
     text-decoration: underline !important;
+}
+
+.btn-right {
+    float: right !important;
+}
+
+.img-shop {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 10px;
+    cursor: pointer;
+    border: 1px solid #afb1b361;
+}
+
+.img-shop-border {
+    border: 3px solid #afb1b361;
 }

@@ -106,13 +106,13 @@ export class Masonry extends PureComponent {
             ...this.props.masonryStyle
         };
         return (
-            <Row style={{ overflowY: 'hidden', margin: '5px', height: this.props.height || '100%' }}>
+            <Row style={{ overflowY: 'hidden',overflowX: 'hidden', margin: '5px', height: this.props.height || '100%' }}>
                 <div style={masonryStyle} ref="Masonry">
                     {this.mapChildren().map((col, ci) => {
                         return (
-                            <Col className='pr-2 pl-2' style={this.props.columnStyle} key={ci} >
+                            <Col className='pr-2-custom pl-2-custom' style={this.props.columnStyle} key={ci} >
                                 {col.map((child, i) => {
-                                    return <Card key={i} className='mt-2 mb-2'>{child}</Card>
+                                    return <Card key={i} className='mt-2 mb-2 card-view'>{child}</Card>
                                 })}
                             </Col>
                         )

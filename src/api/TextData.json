@@ -1,0 +1,10 @@
+{
+    "upload_receipt_success": "อัพโหลดใบเสร็จแล้ว",
+    "upload_receipt_success_detail" : "คุณได้ทำการอัพโหลดใบเสร็จแล้ว ระบบกำลังตรวจสอบใบเสร็จของคุณ",
+    "confirm_receipt_success" : "ยืนยันใบเสร็จแล้ว",
+    "confirm_receipt_success_detail" : "ระบบได้ทำการยืนยันใบเสร็จแล้ว กำลังจัดส่งสินค้า",
+    "order_succuss" : "คุณได้รับสินค้าแล้ว",
+    "cancel_order": "ยกเลิกคำสั่งซื้อแล้ว",
+    "price_delivery": 50,
+    "price_delivery_cond": 500
+}

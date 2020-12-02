@@ -96,7 +96,6 @@ export default class Main extends React.Component {
               dataListOrder.push({
                 key:dataOrder.key,
                 keyorder:s.key,
-                img: order.product[0].picture,
                 product: order.product,
                 date_order: order.date_order,
                 price:order.price,
