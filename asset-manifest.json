@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/duck-follow/static/css/main.b7d72675.chunk.css",
-    "main.js": "/duck-follow/static/js/main.dc899862.chunk.js",
-    "main.js.map": "/duck-follow/static/js/main.dc899862.chunk.js.map",
+    "main.js": "/duck-follow/static/js/main.0cf8366d.chunk.js",
+    "main.js.map": "/duck-follow/static/js/main.0cf8366d.chunk.js.map",
     "runtime-main.js": "/duck-follow/static/js/runtime-main.10a00341.js",
     "runtime-main.js.map": "/duck-follow/static/js/runtime-main.10a00341.js.map",
     "static/css/2.892ff830.chunk.css": "/duck-follow/static/css/2.892ff830.chunk.css",
-    "static/js/2.71a88aba.chunk.js": "/duck-follow/static/js/2.71a88aba.chunk.js",
-    "static/js/2.71a88aba.chunk.js.map": "/duck-follow/static/js/2.71a88aba.chunk.js.map",
+    "static/js/2.9fe42d09.chunk.js": "/duck-follow/static/js/2.9fe42d09.chunk.js",
+    "static/js/2.9fe42d09.chunk.js.map": "/duck-follow/static/js/2.9fe42d09.chunk.js.map",
     "index.html": "/duck-follow/index.html",
-    "precache-manifest.4eb359f0041ecff5644a0d3a7cbd9886.js": "/duck-follow/precache-manifest.4eb359f0041ecff5644a0d3a7cbd9886.js",
+    "precache-manifest.e42b8dc1999e094e9ae624e014447ee7.js": "/duck-follow/precache-manifest.e42b8dc1999e094e9ae624e014447ee7.js",
     "service-worker.js": "/duck-follow/service-worker.js",
     "static/css/2.892ff830.chunk.css.map": "/duck-follow/static/css/2.892ff830.chunk.css.map",
     "static/css/main.b7d72675.chunk.css.map": "/duck-follow/static/css/main.b7d72675.chunk.css.map",
-    "static/js/2.71a88aba.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.71a88aba.chunk.js.LICENSE.txt",
+    "static/js/2.9fe42d09.chunk.js.LICENSE.txt": "/duck-follow/static/js/2.9fe42d09.chunk.js.LICENSE.txt",
     "static/media/318x180.svg": "/duck-follow/static/media/318x180.d5ff1945.svg",
     "static/media/KU_Logo.png": "/duck-follow/static/media/KU_Logo.cc35a46b.png",
-    "static/media/android_logo.svg": "/duck-follow/static/media/android_logo.ac3421ce.svg",
+    "static/media/android_logo.svg": "/duck-follow/static/media/android_logo.a25a929c.svg",
     "static/media/ar-camera.svg": "/duck-follow/static/media/ar-camera.8621c6ad.svg",
     "static/media/arrow.svg": "/duck-follow/static/media/arrow.31fe86fd.svg",
     "static/media/banner.png": "/duck-follow/static/media/banner.b060f483.png",
@@ -26,7 +26,7 @@
     "static/media/confused.svg": "/duck-follow/static/media/confused.4d39e029.svg",
     "static/media/duck.svg": "/duck-follow/static/media/duck.7cb5d820.svg",
     "static/media/error.svg": "/duck-follow/static/media/error.6d1bac02.svg",
-    "static/media/fab-shop.svg": "/duck-follow/static/media/fab-shop.bcec829e.svg",
+    "static/media/fab-shop.svg": "/duck-follow/static/media/fab-shop.a9fa4304.svg",
     "static/media/facebook.svg": "/duck-follow/static/media/facebook.06468580.svg",
     "static/media/github.svg": "/duck-follow/static/media/github.42d4d371.svg",
     "static/media/googleplay.svg": "/duck-follow/static/media/googleplay.f7eab211.svg",
@@ -54,7 +54,7 @@
     "static/media/qr_code_pay.png": "/duck-follow/static/media/qr_code_pay.ad230c28.png",
     "static/media/sad.svg": "/duck-follow/static/media/sad.44bda2f3.svg",
     "static/media/scb-logo.jpg": "/duck-follow/static/media/scb-logo.44ee5dde.jpg",
-    "static/media/shield.svg": "/duck-follow/static/media/shield.315b768e.svg",
+    "static/media/shield.svg": "/duck-follow/static/media/shield.67fcc430.svg",
     "static/media/shop.png": "/duck-follow/static/media/shop.cbd5837e.png",
     "static/media/shop_register.png": "/duck-follow/static/media/shop_register.bd1414e6.png",
     "static/media/smes.png": "/duck-follow/static/media/smes.fbf40829.png",
@@ -71,8 +71,8 @@
   "entrypoints": [
     "static/js/runtime-main.10a00341.js",
     "static/css/2.892ff830.chunk.css",
-    "static/js/2.71a88aba.chunk.js",
+    "static/js/2.9fe42d09.chunk.js",
     "static/css/main.b7d72675.chunk.css",
-    "static/js/main.dc899862.chunk.js"
+    "static/js/main.0cf8366d.chunk.js"
   ]
 }
