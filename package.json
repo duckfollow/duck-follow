@@ -30,7 +30,7 @@
     "react-toastify": "^6.2.0",
     "reactstrap": "^8.9.0",
     "styled-components": "^5.2.1",
-    "swiper": "^5.4.5"
+    "swiper": "^6.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
