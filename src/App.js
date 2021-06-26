@@ -19,6 +19,7 @@ import ShopStoreRegister from './components/ShopStoreRegister'
 import ShopStoreDashboard from './components/ShopStoreDashboard'
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import Webview from './components/Webview';
 function App() {
   return (
     <HashRouter basename="/">

@@ -279,7 +279,8 @@ export default class ShopStoreDashboard extends React.Component {
         } else {
           this.props.history.push('/shop-store-register')
         }
-      }); 
+      });
+
       const dataOrder = firebase.database().ref('orderweb/');
       dataOrder.on('value', (snapshot) => {
         let freBaseData = snapshot.val();
